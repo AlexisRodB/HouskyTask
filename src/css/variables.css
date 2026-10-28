@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* --- TIPOGRAFÍA --- */
+  --font-main: 'Plus Jakarta Sans', sans-serif;
+
+  /* --- PALETA DE COLORES (MODO OSCURO ATREVIDO) --- */
+  --bg-main: #070913;          /* Fondo principal de la página (Oscuro profundo) */
+  --bg-surface: #101626;       /* Color de tarjetas, sidebars y contenedores */
+  --bg-surface-hover: #1a2338; /* Estado hover para elementos interactivos */
+  
+  --border-color: #1e293b;     /* Bordes sutiles */
+  --border-focus: #3b82f6;     /* Borde activo */
+
+  /* --- COLORES DE ACENTO--- */
+  --accent-orange: #FF6B00;    /* Naranja atrevido para CTAs y destacar */
+  --accent-orange-hover: #e05e00;
+  
+  --accent-green: #10B981;     /* Verde neon/esmeralda para exito y tareas listas */
+  --accent-green-glow: rgba(16, 185, 129, 0.15);
+
+  /* --- PRIORIDADES --- */
+  --priority-high: #EF4444;    /* Rojo / Naranja intenso */
+  --priority-medium: #F59E0B;  /* Amarillo / Ámbar */
+  --priority-low: #10B981;     /* Verde */
+
+  /* --- TEXTOS --- */
+  --text-primary: #F8FAFC;     /* Blanco suave para máxima legibilidade */
+  --text-secondary: #94A3B8;   /* Gris claro para subtítulos y fechas */
+  --text-muted: #64748B;       /* Gris apagado para textos secundarios */
+
+  /* --- EFECTOS Y TRANSICIONES --- */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  --radius-box: 16px;
+  --radius-btn: 10px;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
