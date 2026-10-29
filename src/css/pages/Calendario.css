@@ -1,0 +1,15 @@
+/* Página: calendario.html */
+.calendar-grid-cell {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  min-height: 110px;
+  transition: all 0.2s ease;
+}
+
+.calendar-grid-cell:hover {
+  border-color: var(--accent-orange);
+}
+
+.calendar-grid-cell.selected {
+  border: 2px solid var(--accent-orange) !important;
+}

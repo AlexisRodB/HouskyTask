@@ -1,0 +1,12 @@
+/* Página: index.html (Inicio) */
+@media (max-width: 991.98px) {
+  .sidebar-desktop {
+    display: none !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .mobile-header-bar {
+    display: none !important;
+  }
+}

@@ -1,0 +1,80 @@
+/* Página: agregarTarea.html */
+body {
+  background-color: var(--bg-main) !important;
+  color: var(--text-primary);
+}
+
+.bg-surface-custom {
+  background-color: var(--bg-surface) !important;
+}
+
+.border-custom {
+  border-color: var(--border-color) !important;
+}
+
+/* Controles de formulario */
+.form-control-housky,
+.form-select-housky {
+  background-color: #0b0f19 !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  border-radius: var(--radius-btn);
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+
+.form-control-housky:focus,
+.form-select-housky:focus {
+  border-color: var(--accent-orange) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 107, 0, 0.15) !important;
+}
+
+.form-control-housky::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* Botones de prioridad (pills) */
+.priority-pill {
+  background-color: #0b0f19 !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-secondary) !important;
+  cursor: pointer;
+  border-radius: var(--radius-btn);
+  transition: all var(--transition-fast);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.priority-pill:hover {
+  border-color: var(--text-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.priority-pill.active {
+  border-color: var(--accent-orange) !important;
+  color: var(--text-primary) !important;
+  background-color: rgba(255, 107, 0, 0.12) !important;
+  box-shadow: 0 0 12px rgba(255, 107, 0, 0.2);
+}
+
+/* Contenedores y tarjetas */
+.card-housky-form {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-box);
+  box-shadow: var(--shadow-card);
+}
+
+.preview-task-card {
+  background-color: #0b0f19;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-box);
+}
+
+.text-secondary-custom {
+  color: var(--text-secondary) !important;
+}
+
+.text-muted-custom {
+  color: var(--text-muted) !important;
+}

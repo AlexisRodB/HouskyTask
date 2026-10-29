@@ -1,4 +1,4 @@
-@import url('./variables.css');
+@import url("./variables.css");
 
 * {
   box-sizing: border-box;
@@ -21,7 +21,9 @@ body {
   border-radius: var(--radius-box);
   padding: 24px;
   box-shadow: var(--shadow-card);
-  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .card-housky:hover {
@@ -36,7 +38,9 @@ body {
   padding: 10px 20px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .btn-primary-housky:hover {

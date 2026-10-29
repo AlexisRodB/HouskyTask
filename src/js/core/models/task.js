@@ -4,6 +4,7 @@ export class Task {
     title,
     description = '',
     dueDate,
+    time = '10:00',
     priority = 'media',
     status = 'pendiente',
     project = 'General',
@@ -17,6 +18,7 @@ export class Task {
     this.title = title.trim();
     this.description = description.trim();
     this.dueDate = dueDate || new Date().toISOString().split('T')[0];
+    this.time = time;
     this.priority = priority;
     this.status = status;
     this.project = project.trim();
@@ -42,6 +44,7 @@ export class Task {
       title: this.title,
       description: this.description,
       dueDate: this.dueDate,
+      time: this.time,
       priority: this.priority,
       status: this.status,
       project: this.project,
@@ -60,6 +63,7 @@ export class Task {
       title: plainObject.title,
       description: plainObject.description,
       dueDate: plainObject.dueDate,
+      time: plainObject.time,
       priority: plainObject.priority,
       status: plainObject.status,
       project: plainObject.project,
