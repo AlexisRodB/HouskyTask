@@ -1,4 +1,3 @@
-/* Página: agregarTarea.html */
 body {
   background-color: var(--bg-main) !important;
   color: var(--text-primary);
@@ -33,7 +32,7 @@ body {
   color: var(--text-muted) !important;
 }
 
-/* Botones de prioridad (pills) */
+/* Botones de prioridad*/
 .priority-pill {
   background-color: #0b0f19 !important;
   border: 1px solid var(--border-color) !important;
