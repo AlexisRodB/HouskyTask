@@ -34,13 +34,7 @@ function createMobileNavigation() {
   brand.textContent = "HouskyTask";
   brandGroup.append(toggleButton, brand);
 
-  const initials = document.createElement("span");
-  initials.className =
-    "rounded-circle text-white d-flex align-items-center justify-content-center fw-bold";
-  initials.style.cssText =
-    "width: 32px; height: 32px; font-size: 0.8rem; background-color: var(--accent-orange);";
-  initials.textContent = "AR";
-  header.append(brandGroup, initials);
+  header.append(brandGroup);
 
   const drawer = document.createElement("div");
   drawer.className = "offcanvas offcanvas-start text-white";
