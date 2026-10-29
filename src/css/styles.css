@@ -77,3 +77,16 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
 }
+
+@media (max-width: 575.98px) {
+  main {
+    min-width: 0;
+    padding: 1rem !important;
+  }
+
+  .card-housky,
+  .card-housky-profile,
+  .card-housky-form {
+    padding: 1rem !important;
+  }
+}

@@ -97,8 +97,7 @@
     </nav>
 
     <main
-      class="flex-grow-1 p-4 d-flex flex-column"
-      style="height: 100vh; overflow: hidden"
+      class="whiteboard-main flex-grow-1 p-4 d-flex flex-column"
     >
       <!-- header -->
       <div
@@ -113,7 +112,7 @@
         </div>
 
         <div
-          class="d-flex align-items-center gap-2 bg-dark p-2 rounded border border-secondary flex-wrap"
+          class="whiteboard-toolbar d-flex align-items-center gap-2 bg-dark p-2 rounded border border-secondary flex-wrap"
         >
           <!-- lapiz y borrador -->
           <button
@@ -133,7 +132,7 @@
 
           <div class="vr bg-secondary mx-1"></div>
 
-          <!-- Menú Desplegable de Figuras Geométricas -->
+          <!-- figuras geometricas -->
           <div class="dropdown">
             <button
               class="btn btn-sm btn-dark border border-secondary text-secondary dropdown-toggle tool-btn d-flex align-items-center gap-1 px-2"
@@ -162,6 +161,36 @@
               <li>
                 <a class="dropdown-item shape-option" href="#" data-shape="line"
                   ><i class="bi bi-slash-lg me-2"></i> Línea recta</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item shape-option" href="#" data-shape="ellipse"
+                  ><i class="bi bi-ellipse me-2"></i> Elipse</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item shape-option" href="#" data-shape="triangle"
+                  ><i class="bi bi-triangle me-2"></i> Triángulo</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item shape-option" href="#" data-shape="diamond"
+                  ><i class="bi bi-diamond me-2"></i> Rombo</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item shape-option" href="#" data-shape="pentagon"
+                  ><i class="bi bi-pentagon me-2"></i> Pentágono</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item shape-option" href="#" data-shape="hexagon"
+                  ><i class="bi bi-hexagon me-2"></i> Hexágono</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item shape-option" href="#" data-shape="arrow"
+                  ><i class="bi bi-arrow-up-right me-2"></i> Flecha</a
                 >
               </li>
             </ul>
@@ -249,5 +278,6 @@
       src="./js/adapters/inbound/dom/whiteboardController.js"
     ></script>
     <script type="module" src="./js/shared/currentDate.js"></script>
+    <script type="module" src="./js/shared/mobileNavigation.js"></script>
   </body>
 </html>

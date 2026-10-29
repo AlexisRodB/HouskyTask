@@ -13,3 +13,18 @@
 .calendar-grid-cell.selected {
   border: 2px solid var(--accent-orange) !important;
 }
+
+@media (max-width: 575.98px) {
+  .calendar-grid-cell {
+    min-height: 56px !important;
+    padding: 0.35rem !important;
+  }
+
+  .calendar-grid-cell > .flex-grow-1 {
+    display: none !important;
+  }
+
+  #current-month-title {
+    font-size: 1.2rem;
+  }
+}
