@@ -1,22 +1,32 @@
-import { LocalStorageTaskRepo } from '../../outbound/storage/LocalStorageTaskRepo.js';
+import { LocalStorageTaskRepo } from "../../outbound/storage/LocalStorageTaskRepo.js";
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const taskRepo = new LocalStorageTaskRepo();
-  const gridContainer = document.getElementById('calendar-grid-container');
-  const monthTitle = document.getElementById('current-month-title');
-  const subtitleText = document.getElementById('subtitle-text');
-  const totalTasksCountEl = document.getElementById('total-tasks-month-count');
-  const detailDayHeader = document.getElementById('detail-day-header');
-  const detailTaskContent = document.getElementById('detail-task-content');
-  const afterTodayContainer = document.getElementById('after-today-container');
+  const gridContainer = document.getElementById("calendar-grid-container");
+  const monthTitle = document.getElementById("current-month-title");
+  const subtitleText = document.getElementById("subtitle-text");
+  const totalTasksCountEl = document.getElementById("total-tasks-month-count");
+  const detailDayHeader = document.getElementById("detail-day-header");
+  const detailTaskContent = document.getElementById("detail-task-content");
+  const afterTodayContainer = document.getElementById("after-today-container");
 
   // Estado actual del calendario
   let viewDate = new Date();
-  let selectedDateStr = new Date().toISOString().split('T')[0]; // YYYY-MM-DD por defecto hoy
+  let selectedDateStr = new Date().toISOString().split("T")[0]; // YYYY-MM-DD por defecto hoy
 
   const monthsNames = [
-    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
   ];
 
   async function renderCalendar() {
@@ -24,9 +34,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const month = viewDate.getMonth(); // 0-11
 
     // Actualizar título del mes
-    const monthNameCapitalized = monthsNames[month].charAt(0).toUpperCase() + monthsNames[month].slice(1);
+    const monthNameCapitalized =
+      monthsNames[month].charAt(0).toUpperCase() + monthsNames[month].slice(1);
     if (monthTitle) monthTitle.textContent = `${monthNameCapitalized} ${year}`;
-    if (subtitleText) subtitleText.textContent = `Todas tus tareas, en contexto. ${monthNameCapitalized} de ${year} empieza aquí.`;
+    if (subtitleText)
+      subtitleText.textContent = `Todas tus tareas, en contexto. ${monthNameCapitalized} de ${year} empieza aquí.`;
 
     const tasks = await taskRepo.findAll();
 
@@ -34,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const tasksByDate = {};
     let monthTasksTotal = 0;
 
-    tasks.forEach(t => {
+    tasks.forEach((t) => {
       if (t.dueDate) {
         if (!tasksByDate[t.dueDate]) {
           tasksByDate[t.dueDate] = [];
@@ -42,26 +54,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         tasksByDate[t.dueDate].push(t);
 
         // Contar tareas del mes actual visualizado
-        const [tYear, tMonth] = t.dueDate.split('-').map(Number);
+        const [tYear, tMonth] = t.dueDate.split("-").map(Number);
         if (tYear === year && tMonth === month + 1) {
           monthTasksTotal++;
         }
       }
     });
 
-    if (totalTasksCountEl) totalTasksCountEl.textContent = `${monthTasksTotal} tarea${monthTasksTotal === 1 ? '' : 's'} este mes`;
+    if (totalTasksCountEl)
+      totalTasksCountEl.textContent = `${monthTasksTotal} tarea${monthTasksTotal === 1 ? "" : "s"} este mes`;
 
     // Calcular días del mes
     const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
-    
+
     let startingDayOfWeek = firstDayOfMonth.getDay() - 1; // Lunes = 0
     if (startingDayOfWeek === -1) startingDayOfWeek = 6; // Domingo = 6
 
     const totalDaysInMonth = lastDayOfMonth.getDate();
 
     // Construir semanas (filas de 7 días)
-    let weeksHTML = '';
+    let weeksHTML = "";
     let currentWeekHTML = '<div class="row row-cols-7 g-2">';
     let dayCount = 0;
 
@@ -71,25 +84,37 @@ document.addEventListener('DOMContentLoaded', async () => {
       const pDay = prevLastDay - i;
       const pMonth = month === 0 ? 12 : month;
       const pYear = month === 0 ? year - 1 : year;
-      const dateStr = `${pYear}-${String(pMonth).padStart(2, '0')}-${String(pDay).padStart(2, '0')}`;
-      
-      currentWeekHTML += renderDayCell(pDay, dateStr, tasksByDate[dateStr] || [], true, false);
+      const dateStr = `${pYear}-${String(pMonth).padStart(2, "0")}-${String(pDay).padStart(2, "0")}`;
+
+      currentWeekHTML += renderDayCell(
+        pDay,
+        dateStr,
+        tasksByDate[dateStr] || [],
+        true,
+        false,
+      );
       dayCount++;
     }
 
     // 2. Días del mes actual
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = new Date().toISOString().split("T")[0];
 
     for (let day = 1; day <= totalDaysInMonth; day++) {
       if (dayCount % 7 === 0 && dayCount > 0) {
-        weeksHTML += currentWeekHTML + '</div>';
+        weeksHTML += currentWeekHTML + "</div>";
         currentWeekHTML = '<div class="row row-cols-7 g-2 mt-0">';
       }
 
-      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
       const isToday = dateStr === todayStr;
 
-      currentWeekHTML += renderDayCell(day, dateStr, tasksByDate[dateStr] || [], false, isToday);
+      currentWeekHTML += renderDayCell(
+        day,
+        dateStr,
+        tasksByDate[dateStr] || [],
+        false,
+        isToday,
+      );
       dayCount++;
     }
 
@@ -98,13 +123,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     while (dayCount % 7 !== 0) {
       const nMonth = month === 11 ? 1 : month + 2;
       const nYear = month === 11 ? year + 1 : year;
-      const dateStr = `${nYear}-${String(nMonth).padStart(2, '0')}-${String(nextMonthDay).padStart(2, '0')}`;
+      const dateStr = `${nYear}-${String(nMonth).padStart(2, "0")}-${String(nextMonthDay).padStart(2, "0")}`;
 
-      currentWeekHTML += renderDayCell(nextMonthDay, dateStr, tasksByDate[dateStr] || [], true, false);
+      currentWeekHTML += renderDayCell(
+        nextMonthDay,
+        dateStr,
+        tasksByDate[dateStr] || [],
+        true,
+        false,
+      );
       nextMonthDay++;
       dayCount++;
     }
-    weeksHTML += currentWeekHTML + '</div>';
+    weeksHTML += currentWeekHTML + "</div>";
 
     gridContainer.innerHTML = weeksHTML;
 
@@ -112,35 +143,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     attachDayClickEvents(tasksByDate, tasks);
 
     // Renderizar panel de detalles para la fecha seleccionada
-    renderDayDetails(selectedDateStr, tasksByDate[selectedDateStr] || [], tasks);
+    renderDayDetails(
+      selectedDateStr,
+      tasksByDate[selectedDateStr] || [],
+      tasks,
+    );
   }
 
   function renderDayCell(dayNumber, dateStr, dayTasks, isOtherMonth, isToday) {
     const isSelected = dateStr === selectedDateStr;
     const hasTasks = dayTasks.length > 0;
 
-    let badgeClass = 'bg-secondary';
+    let badgeClass = "bg-secondary";
     if (hasTasks) {
-      if (dayTasks.some(t => t.priority === 'alta')) badgeClass = 'bg-danger';
-      else if (dayTasks.every(t => t.status === 'completada')) badgeClass = 'bg-success';
+      if (dayTasks.some((t) => t.priority === "alta")) badgeClass = "bg-danger";
+      else if (dayTasks.every((t) => t.status === "completada"))
+        badgeClass = "bg-success";
     }
 
     return `
       <div class="col">
-        <div class="calendar-grid-cell p-2 rounded d-flex flex-column justify-content-between ${isSelected ? 'selected' : ''} ${isOtherMonth ? 'opacity-50' : ''}" 
+        <div class="calendar-grid-cell p-2 rounded d-flex flex-column justify-content-between ${isSelected ? "selected" : ""} ${isOtherMonth ? "opacity-50" : ""}" 
              data-date="${dateStr}" style="cursor: pointer; min-height: 105px;">
           <div class="d-flex justify-content-between align-items-center mb-1">
-            <span class="fw-bold ${isToday ? 'text-warning' : 'text-white'}" style="font-size: 0.85rem;">${dayNumber}</span>
-            ${hasTasks ? `<span class="rounded-circle ${badgeClass}" style="width: 6px; height: 6px;" title="${dayTasks.length} tareas"></span>` : ''}
+            <span class="fw-bold ${isToday ? "text-warning" : "text-white"}" style="font-size: 0.85rem;">${dayNumber}</span>
+            ${hasTasks ? `<span class="rounded-circle ${badgeClass}" style="width: 6px; height: 6px;" title="${dayTasks.length} tareas"></span>` : ""}
           </div>
           
           <div class="flex-grow-1 overflow-hidden d-flex flex-column gap-1" style="max-height: 70px;">
-            ${dayTasks.slice(0, 2).map(t => `
+            ${dayTasks
+              .slice(0, 2)
+              .map(
+                (t) => `
               <div class="p-1 rounded bg-dark border border-secondary text-truncate" style="font-size: 0.65rem;" title="${t.title}">
-                <span class="${t.status === 'completada' ? 'text-decoration-line-through text-muted' : 'text-white'}">${t.title}</span>
+                <span class="${t.status === "completada" ? "text-decoration-line-through text-muted" : "text-white"}">${t.title}</span>
               </div>
-            `).join('')}
-            ${dayTasks.length > 2 ? `<small class="text-secondary" style="font-size: 0.6rem;">+${dayTasks.length - 2} más</small>` : ''}
+            `,
+              )
+              .join("")}
+            ${dayTasks.length > 2 ? `<small class="text-secondary" style="font-size: 0.6rem;">+${dayTasks.length - 2} más</small>` : ""}
           </div>
         </div>
       </div>
@@ -148,13 +189,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function attachDayClickEvents(tasksByDate, allTasks) {
-    document.querySelectorAll('.calendar-grid-cell').forEach(cell => {
-      cell.addEventListener('click', (e) => {
-        const dateStr = e.currentTarget.getAttribute('data-date');
+    document.querySelectorAll(".calendar-grid-cell").forEach((cell) => {
+      cell.addEventListener("click", (e) => {
+        const dateStr = e.currentTarget.getAttribute("data-date");
         selectedDateStr = dateStr;
-        
-        document.querySelectorAll('.calendar-grid-cell').forEach(c => c.classList.remove('selected'));
-        e.currentTarget.classList.add('selected');
+
+        document
+          .querySelectorAll(".calendar-grid-cell")
+          .forEach((c) => c.classList.remove("selected"));
+        e.currentTarget.classList.add("selected");
 
         renderDayDetails(dateStr, tasksByDate[dateStr] || [], allTasks);
       });
@@ -164,11 +207,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   function renderDayDetails(dateStr, dayTasks, allTasks) {
     let formattedTitle = dateStr;
     if (dateStr) {
-      const [year, month, day] = dateStr.split('-');
+      const [year, month, day] = dateStr.split("-");
       const dateObj = new Date(year, month - 1, day);
-      const options = { weekday: 'long', day: 'numeric', month: 'long' };
-      formattedTitle = dateObj.toLocaleDateString('es-ES', options);
-      formattedTitle = formattedTitle.charAt(0).toUpperCase() + formattedTitle.slice(1);
+      const options = { weekday: "long", day: "numeric", month: "long" };
+      formattedTitle = dateObj.toLocaleDateString("es-ES", options);
+      formattedTitle =
+        formattedTitle.charAt(0).toUpperCase() + formattedTitle.slice(1);
     }
 
     if (detailDayHeader) {
@@ -180,7 +224,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       detailTaskContent.innerHTML = `
         <div class="text-secondary small mb-1"><i class="bi bi-clock me-1"></i> Entrega programada</div>
         <h5 class="fw-bold text-white mb-2">${mainTask.title}</h5>
-        <p class="text-secondary small mb-3">${mainTask.description || 'Sin descripción adicional para esta tarea.'}</p>
+        <p class="text-secondary small mb-3">${mainTask.description || "Sin descripción adicional para esta tarea."}</p>
         
         <div class="d-flex align-items-center gap-2 mb-3">
           <span class="badge-priority-${mainTask.priority}" style="font-size: 0.65rem;">${mainTask.priority.toUpperCase()}</span>
@@ -189,11 +233,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         <div class="mb-3">
           <div class="d-flex justify-content-between text-secondary small mb-1">
-            <span>Proyecto: ${mainTask.project || 'General'}</span>
-            <span>${mainTask.status === 'completada' ? '100%' : 'En progreso'}</span>
+            <span>Proyecto: ${mainTask.project || "General"}</span>
+            <span>${mainTask.status === "completada" ? "100%" : "En progreso"}</span>
           </div>
           <div class="progress bg-dark border border-secondary" style="height: 6px;">
-            <div class="progress-bar bg-warning" style="width: ${mainTask.status === 'completada' ? '100%' : '50%'}"></div>
+            <div class="progress-bar bg-warning" style="width: ${mainTask.status === "completada" ? "100%" : "50%"}"></div>
           </div>
         </div>
 
@@ -212,19 +256,26 @@ document.addEventListener('DOMContentLoaded', async () => {
       `;
     }
 
-    const afterTasks = allTasks.filter(t => t.dueDate && t.dueDate > selectedDateStr).sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate)).slice(0, 3);
+    const afterTasks = allTasks
+      .filter((t) => t.dueDate && t.dueDate > selectedDateStr)
+      .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+      .slice(0, 3);
 
     if (afterTodayContainer) {
       if (afterTasks.length > 0) {
-        afterTodayContainer.innerHTML = afterTasks.map(t => `
+        afterTodayContainer.innerHTML = afterTasks
+          .map(
+            (t) => `
           <div class="p-2 rounded bg-dark border border-secondary d-flex justify-content-between align-items-center">
             <div>
               <div class="text-white fw-bold small mb-0">${t.title}</div>
-              <small class="text-secondary" style="font-size: 0.7rem;">${t.dueDate} · ${t.project || 'General'}</small>
+              <small class="text-secondary" style="font-size: 0.7rem;">${t.dueDate} · ${t.project || "General"}</small>
             </div>
             <span class="badge-priority-${t.priority}" style="font-size: 0.55rem;">${t.priority}</span>
           </div>
-        `).join('');
+        `,
+          )
+          .join("");
       } else {
         afterTodayContainer.innerHTML = `<small class="text-secondary">No hay más tareas programadas adelante.</small>`;
       }
@@ -232,19 +283,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Navegación de meses
-  document.getElementById('prev-month-btn')?.addEventListener('click', () => {
+  document.getElementById("prev-month-btn")?.addEventListener("click", () => {
     viewDate.setMonth(viewDate.getMonth() - 1);
     renderCalendar();
   });
 
-  document.getElementById('next-month-btn')?.addEventListener('click', () => {
+  document.getElementById("next-month-btn")?.addEventListener("click", () => {
     viewDate.setMonth(viewDate.getMonth() + 1);
     renderCalendar();
   });
 
-  document.getElementById('today-month-btn')?.addEventListener('click', () => {
+  document.getElementById("today-month-btn")?.addEventListener("click", () => {
     viewDate = new Date();
-    selectedDateStr = new Date().toISOString().split('T')[0];
+    selectedDateStr = new Date().toISOString().split("T")[0];
     renderCalendar();
   });
 

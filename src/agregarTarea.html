@@ -1,424 +1,643 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HouskyTask - Agregar Tarea</title>
-  
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  
-  <!-- Hojas de estilo del sistema -->
-  <link rel="stylesheet" href="./css/variables.css">
-  <link rel="stylesheet" href="./css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HouskyTask - Agregar Tarea</title>
 
-  <style>
-    /* Estilos específicos de la vista ordenados con tus variables globales */
-    body {
-      background-color: var(--bg-main) !important;
-      color: var(--text-primary);
-    }
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
 
-    .bg-surface-custom {
-      background-color: var(--bg-surface) !important;
-    }
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/pages/AgregarTarea.css" />
+  </head>
 
-    .border-custom {
-      border-color: var(--border-color) !important;
-    }
+  <body class="d-flex flex-column flex-lg-row">
+    <!-- navegacion movil -->
+    <nav
+      class="navbar navbar-dark bg-surface-custom d-lg-none px-3 border-bottom border-custom"
+    >
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <i
+          class="bi bi-check2-square fs-4 me-2"
+          style="color: var(--accent-orange)"
+        ></i>
+        <span class="fs-5 fw-bold">HouskyTask</span>
+      </a>
+      <button
+        class="navbar-toggler border-custom"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mobileSidebar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
 
-    /* Sobreescritura de controles de formulario */
-    .form-control-housky, .form-select-housky {
-      background-color: #0b0f19 !important;
-      border: 1px solid var(--border-color) !important;
-      color: var(--text-primary) !important;
-      border-radius: var(--radius-btn);
-      padding: 10px 14px;
-      font-size: 0.9rem;
-    }
-
-    .form-control-housky:focus, .form-select-housky:focus {
-      border-color: var(--accent-orange) !important;
-      box-shadow: 0 0 0 0.2rem rgba(255, 107, 0, 0.15) !important;
-    }
-
-    .form-control-housky::placeholder {
-      color: var(--text-muted) !important;
-    }
-
-    /* Botones de Prioridad (Pills) */
-    .priority-pill {
-      background-color: #0b0f19 !important;
-      border: 1px solid var(--border-color) !important;
-      color: var(--text-secondary) !important;
-      cursor: pointer;
-      border-radius: var(--radius-btn);
-      transition: all var(--transition-fast);
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-
-    .priority-pill:hover {
-      border-color: var(--text-secondary) !important;
-      color: var(--text-primary) !important;
-    }
-
-    .priority-pill.active {
-      border-color: var(--accent-orange) !important;
-      color: var(--text-primary) !important;
-      background-color: rgba(255, 107, 0, 0.12) !important;
-      box-shadow: 0 0 12px rgba(255, 107, 0, 0.2);
-    }
-
-    /* Contenedores y Tarjetas de la Vista */
-    .card-housky-form {
-      background-color: var(--bg-surface);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-box);
-      box-shadow: var(--shadow-card);
-    }
-
-    .preview-task-card {
-      background-color: #0b0f19;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-box);
-    }
-
-    .text-secondary-custom {
-      color: var(--text-secondary) !important;
-    }
-
-    .text-muted-custom {
-      color: var(--text-muted) !important;
-    }
-  </style>
-</head>
-<body class="d-flex flex-column flex-lg-row">
-
-  <!-- ================= NAVEGACIÓN MÓVIL (Offcanvas) ================= -->
-  <nav class="navbar navbar-dark bg-surface-custom d-lg-none px-3 border-bottom border-custom">
-    <a class="navbar-brand d-flex align-items-center" href="index.html">
-      <i class="bi bi-check2-square fs-4 me-2" style="color: var(--accent-orange);"></i>
-      <span class="fs-5 fw-bold">HouskyTask</span>
-    </a>
-    <button class="navbar-toggler border-custom" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  </nav>
-
-  <div class="offcanvas offcanvas-start bg-surface-custom text-white" tabindex="-1" id="mobileSidebar" style="width: 280px;">
-    <div class="offcanvas-header border-bottom border-custom">
-      <h5 class="offcanvas-title d-flex align-items-center">
-        <i class="bi bi-check2-square fs-4 me-2" style="color: var(--accent-orange);"></i>
-        <span>HouskyTask</span>
-      </h5>
-      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body d-flex flex-column justify-content-between p-3">
-      <div>
-        <div class="text-secondary-custom small mb-2 text-uppercase fw-bold" style="font-size: 0.75rem;">Espacio personal</div>
-        <ul class="nav nav-pills flex-column mb-auto gap-1">
-          <li>
-            <a href="index.html" class="nav-link text-secondary-custom">
-              <i class="bi bi-house-door me-2"></i> Inicio
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="agregarTarea.html" class="nav-link text-white active" style="background-color: rgba(255,107,0,0.15); border-left: 3px solid var(--accent-orange);">
-              <i class="bi bi-plus-circle me-2"></i> Agregar tarea
-            </a>
-          </li>
-          <li>
-            <a href="todasTareas.html" class="nav-link text-secondary-custom">
-              <i class="bi bi-list-task me-2"></i> Todas las tareas
-            </a>
-          </li>
-          <li>
-            <a href="calendario.html" class="nav-link text-secondary-custom">
-              <i class="bi bi-calendar3 me-2"></i> Calendario
-            </a>
-          </li>
-          <li>
-            <a href="perfil.html" class="nav-link text-secondary-custom">
-              <i class="bi bi-person me-2"></i> Perfil
-            </a>
-          </li>
-          <li>
-            <a href="tablero.html" class="nav-link text-secondary-custom">
-              <i class="bi bi-kanban me-2"></i> Tablero visual
-            </a>
-          </li>
-        </ul>
-
-        <div class="text-secondary-custom small mb-2 text-uppercase fw-bold mt-4" style="font-size: 0.75rem;">Mis proyectos</div>
-        <ul class="nav nav-pills flex-column mb-4 gap-1" id="mobile-sidebar-projects-list">
-          <!-- Carga dinámica -->
-        </ul>
+    <div
+      class="offcanvas offcanvas-start bg-surface-custom text-white"
+      tabindex="-1"
+      id="mobileSidebar"
+      style="width: 280px"
+    >
+      <div class="offcanvas-header border-bottom border-custom">
+        <h5 class="offcanvas-title d-flex align-items-center">
+          <i
+            class="bi bi-check2-square fs-4 me-2"
+            style="color: var(--accent-orange)"
+          ></i>
+          <span>HouskyTask</span>
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="offcanvas"
+        ></button>
       </div>
+      <div
+        class="offcanvas-body d-flex flex-column justify-content-between p-3"
+      >
+        <div>
+          <div
+            class="text-secondary-custom small mb-2 text-uppercase fw-bold"
+            style="font-size: 0.75rem"
+          >
+            Espacio personal
+          </div>
+          <ul class="nav nav-pills flex-column mb-auto gap-1">
+            <li>
+              <a href="index.html" class="nav-link text-secondary-custom">
+                <i class="bi bi-house-door me-2"></i> Inicio
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="agregarTarea.html"
+                class="nav-link text-white active"
+                style="
+                  background-color: rgba(255, 107, 0, 0.15);
+                  border-left: 3px solid var(--accent-orange);
+                "
+              >
+                <i class="bi bi-plus-circle me-2"></i> Agregar tarea
+              </a>
+            </li>
+            <li>
+              <a href="todasTareas.html" class="nav-link text-secondary-custom">
+                <i class="bi bi-list-task me-2"></i> Todas las tareas
+              </a>
+            </li>
+            <li>
+              <a href="calendario.html" class="nav-link text-secondary-custom">
+                <i class="bi bi-calendar3 me-2"></i> Calendario
+              </a>
+            </li>
+            <li>
+              <a href="perfil.html" class="nav-link text-secondary-custom">
+                <i class="bi bi-person me-2"></i> Perfil
+              </a>
+            </li>
+            <li>
+              <a href="tablero.html" class="nav-link text-secondary-custom">
+                <i class="bi bi-kanban me-2"></i> Tablero visual
+              </a>
+            </li>
+          </ul>
 
-      <div class="pt-3 border-top border-custom">
-        <div class="p-2 rounded mb-3" style="background-color: rgba(255,255,255,0.04);">
-          <p class="small text-secondary-custom mb-1 fst-italic">"Un paso a la vez."</p>
-          <span class="small text-muted-custom" style="font-size: 0.75rem;">Deja espacio para lo que importa.</span>
+          <div
+            class="text-secondary-custom small mb-2 text-uppercase fw-bold mt-4"
+            style="font-size: 0.75rem"
+          >
+            Mis proyectos
+          </div>
+          <ul class="nav nav-pills flex-column mb-4 gap-1" id="mobile-sidebar-projects-list">
+            <!-- se llena con js -->
+          </ul>
+        </div>
+
+        <div class="pt-3 border-top border-custom">
+          <div
+            class="p-2 rounded mb-3"
+            style="background-color: rgba(255, 255, 255, 0.04)"
+          >
+            <p class="small text-secondary-custom mb-1 fst-italic">
+              "Un paso a la vez."
+            </p>
+            <span class="small text-muted-custom" style="font-size: 0.75rem"
+              >Deja espacio para lo que importa.</span
+            >
+          </div>
+          <div class="d-flex align-items-center">
+            <div
+              class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2"
+              style="
+                width: 36px;
+                height: 36px;
+                background: linear-gradient(
+                  135deg,
+                  var(--accent-orange),
+                  var(--accent-green)
+                );
+                font-size: 0.8rem;
+              "
+            >
+              AR
+            </div>
+            <div class="overflow-hidden">
+              <h6 class="mb-0 text-white" style="font-size: 0.9rem">
+                Alexis Rodríguez B.
+              </h6>
+              <small class="text-secondary-custom" style="font-size: 0.75rem"
+                >Mi espacio personal</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- sidebar -->
+    <nav
+      class="sidebar-desktop d-none d-lg-flex flex-column flex-shrink-0 p-3"
+      style="
+        width: 280px;
+        min-height: 100vh;
+        background-color: var(--bg-surface);
+        border-right: 1px solid var(--border-color);
+      "
+    >
+      <a
+        href="index.html"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none text-white"
+      >
+        <i
+          class="bi bi-check2-square fs-4 me-2"
+          style="color: var(--accent-orange)"
+        ></i>
+        <span class="fs-5 fw-bold">HouskyTask</span>
+      </a>
+      <hr style="border-color: var(--border-color)" />
+
+      <div
+        class="text-secondary-custom small mb-2 text-uppercase fw-bold"
+        style="font-size: 0.75rem"
+      >
+        Espacio personal
+      </div>
+      <ul class="nav nav-pills flex-column mb-auto gap-1">
+        <li>
+          <a href="index.html" class="nav-link text-secondary-custom">
+            <i class="bi bi-house-door me-2"></i> Inicio
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="agregarTarea.html"
+            class="nav-link text-white"
+            style="
+              background-color: rgba(255, 107, 0, 0.15);
+              border-left: 3px solid var(--accent-orange);
+            "
+          >
+            <i class="bi bi-plus-circle me-2"></i> Agregar tarea
+          </a>
+        </li>
+        <li>
+          <a href="todasTareas.html" class="nav-link text-secondary-custom">
+            <i class="bi bi-list-task me-2"></i> Todas las tareas
+          </a>
+        </li>
+        <li>
+          <a href="calendario.html" class="nav-link text-secondary-custom">
+            <i class="bi bi-calendar3 me-2"></i> Calendario
+          </a>
+        </li>
+        <li>
+          <a href="perfil.html" class="nav-link text-secondary-custom">
+            <i class="bi bi-person me-2"></i> Perfil
+          </a>
+        </li>
+        <li>
+          <a href="tablero.html" class="nav-link text-secondary-custom">
+            <i class="bi bi-kanban me-2"></i> Tablero visual
+          </a>
+        </li>
+      </ul>
+
+      <div
+        class="text-secondary-custom small mb-2 text-uppercase fw-bold mt-4"
+        style="font-size: 0.75rem"
+      >
+        Mis proyectos
+      </div>
+      <ul class="nav nav-pills flex-column mb-4 gap-1" id="sidebar-projects-list">
+        <!-- se llena con js -->
+      </ul>
+
+      <div class="mt-auto pt-3 border-top border-custom">
+        <div
+          class="p-2 rounded mb-3"
+          style="background-color: rgba(255, 255, 255, 0.04)"
+        >
+          <p class="small text-secondary-custom mb-1 fst-italic">
+            "Un paso a la vez."
+          </p>
+          <span class="small text-muted-custom" style="font-size: 0.75rem"
+            >Deja espacio para lo que importa.</span
+          >
         </div>
         <div class="d-flex align-items-center">
-          <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2" style="width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-orange), var(--accent-green)); font-size: 0.8rem;">
+          <div
+            class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2"
+            style="
+              width: 36px;
+              height: 36px;
+              background: linear-gradient(
+                135deg,
+                var(--accent-orange),
+                var(--accent-green)
+              );
+              font-size: 0.8rem;
+            "
+          >
             AR
           </div>
           <div class="overflow-hidden">
-            <h6 class="mb-0 text-white" style="font-size: 0.9rem;">Alexis Rodríguez B.</h6>
-            <small class="text-secondary-custom" style="font-size: 0.75rem;">Mi espacio personal</small>
+            <h6 class="mb-0 text-white" style="font-size: 0.9rem">
+              Alexis Rodríguez B.
+            </h6>
+            <small class="text-secondary-custom" style="font-size: 0.75rem"
+              >Mi espacio personal</small
+            >
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </nav>
 
-  <!-- ================= SIDEBAR DE ESCRITORIO ================= -->
-  <nav class="sidebar-desktop d-none d-lg-flex flex-column flex-shrink-0 p-3" style="width: 280px; min-height: 100vh; background-color: var(--bg-surface); border-right: 1px solid var(--border-color);">
-    <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none text-white">
-      <i class="bi bi-check2-square fs-4 me-2" style="color: var(--accent-orange);"></i>
-      <span class="fs-5 fw-bold">HouskyTask</span>
-    </a>
-    <hr style="border-color: var(--border-color);">
-    
-    <div class="text-secondary-custom small mb-2 text-uppercase fw-bold" style="font-size: 0.75rem;">Espacio personal</div>
-    <ul class="nav nav-pills flex-column mb-auto gap-1">
-      <li>
-        <a href="index.html" class="nav-link text-secondary-custom">
-          <i class="bi bi-house-door me-2"></i> Inicio
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="agregarTarea.html" class="nav-link text-white" style="background-color: rgba(255,107,0,0.15); border-left: 3px solid var(--accent-orange);">
-          <i class="bi bi-plus-circle me-2"></i> Agregar tarea
-        </a>
-      </li>
-      <li>
-        <a href="todasTareas.html" class="nav-link text-secondary-custom">
-          <i class="bi bi-list-task me-2"></i> Todas las tareas
-        </a>
-      </li>
-      <li>
-        <a href="calendario.html" class="nav-link text-secondary-custom">
-          <i class="bi bi-calendar3 me-2"></i> Calendario
-        </a>
-      </li>
-      <li>
-        <a href="perfil.html" class="nav-link text-secondary-custom">
-          <i class="bi bi-person me-2"></i> Perfil
-        </a>
-      </li>
-      <li>
-        <a href="tablero.html" class="nav-link text-secondary-custom">
-          <i class="bi bi-kanban me-2"></i> Tablero visual
-        </a>
-      </li>
-    </ul>
-
-    <div class="text-secondary-custom small mb-2 text-uppercase fw-bold mt-4" style="font-size: 0.75rem;">Mis proyectos</div>
-    <ul class="nav nav-pills flex-column mb-4 gap-1" id="sidebar-projects-list">
-      <!-- Carga dinámica -->
-    </ul>
-
-    <div class="mt-auto pt-3 border-top border-custom">
-      <div class="p-2 rounded mb-3" style="background-color: rgba(255,255,255,0.04);">
-        <p class="small text-secondary-custom mb-1 fst-italic">"Un paso a la vez."</p>
-        <span class="small text-muted-custom" style="font-size: 0.75rem;">Deja espacio para lo que importa.</span>
-      </div>
-      <div class="d-flex align-items-center">
-        <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2" style="width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-orange), var(--accent-green)); font-size: 0.8rem;">
-          AR
+    <main class="flex-grow-1 p-4 overflow-y-auto">
+      <div
+        class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-custom flex-wrap gap-3"
+      >
+        <div class="text-secondary-custom small">
+          Mi espacio <span class="mx-1">/</span>
+          <span class="text-white fw-semibold">Agregar tarea</span>
         </div>
-        <div class="overflow-hidden">
-          <h6 class="mb-0 text-white" style="font-size: 0.9rem;">Alexis Rodríguez B.</h6>
-          <small class="text-secondary-custom" style="font-size: 0.75rem;">Mi espacio personal</small>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ================= CONTENIDO PRINCIPAL ================= -->
-  <main class="flex-grow-1 p-4 overflow-y-auto">
-    
-    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-custom flex-wrap gap-3">
-      <div class="text-secondary-custom small">
-        Mi espacio <span class="mx-1">/</span> <span class="text-white fw-semibold">Agregar tarea</span>
-      </div>
-      <div class="d-flex align-items-center gap-3">
-        <span class="text-secondary-custom small">28 / 10 / 2026 (fecha actual)</span>
-        <button class="btn bg-surface-custom border-custom btn-sm text-secondary-custom"><i class="bi bi-bell"></i></button>
-        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px; font-size: 0.8rem;">AR</div>
-      </div>
-    </div>
-
-    <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
-      <div>
-        <h1 class="fw-bold text-white mb-1 display-6">De idea a próximo paso.</h1>
-        <p class="text-secondary-custom mb-0">Define lo importante. Una tarea clara es una tarea más fácil de empezar.</p>
-      </div>
-      <a href="todasTareas.html" class="btn bg-surface-custom border-custom text-white d-flex align-items-center gap-2">
-        <i class="bi bi-arrow-up-right" style="color: var(--accent-orange);"></i> Ver todas las tareas
-      </a>
-    </div>
-
-    <div class="row g-4">
-      
-      <!-- Columna Izquierda: Formulario -->
-      <div class="col-12 col-xl-7">
-        <div class="card-housky-form p-4">
-          
-          <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-custom">
-            <h5 class="text-white fw-bold mb-0 fs-5">Detalles de la tarea</h5>
-            <span class="text-secondary-custom" style="font-size: 0.75rem;">* Campos obligatorios</span>
+        <div class="d-flex align-items-center gap-3">
+          <span class="text-secondary-custom small" data-current-date
+            >--/--/----</span
+          >
+          <button
+            class="btn bg-surface-custom border-custom btn-sm text-secondary-custom"
+          >
+            <i class="bi bi-bell"></i>
+          </button>
+          <div
+            class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold"
+            style="width: 32px; height: 32px; font-size: 0.8rem"
+          >
+            AR
           </div>
+        </div>
+      </div>
 
-          <form id="task-form" class="needs-validation" novalidate>
-            
-            <div class="mb-3">
-              <label for="task-title" class="form-label text-white fw-semibold small">Título <span style="color: var(--accent-orange);">*</span></label>
-              <input type="text" class="form-control form-control-housky" id="task-title" placeholder="Ej. Preparar presentación del portafolio" required>
-              <div class="invalid-feedback">Por favor ingresa un título.</div>
+      <div
+        class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3"
+      >
+        <div>
+          <h1 class="fw-bold text-white mb-1 display-6">
+            De idea a próximo paso.
+          </h1>
+          <p class="text-secondary-custom mb-0">
+            Define lo importante. Una tarea clara es una tarea más fácil de
+            empezar.
+          </p>
+        </div>
+        <a
+          href="todasTareas.html"
+          class="btn bg-surface-custom border-custom text-white d-flex align-items-center gap-2"
+        >
+          <i
+            class="bi bi-arrow-up-right"
+            style="color: var(--accent-orange)"
+          ></i>
+          Ver todas las tareas
+        </a>
+      </div>
+
+      <div class="row g-4">
+        <!-- formulario-->
+        <div class="col-12 col-xl-7">
+          <div class="card-housky-form p-4">
+            <div
+              class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom border-custom"
+            >
+              <h5 class="text-white fw-bold mb-0 fs-5">Detalles de la tarea</h5>
+              <span class="text-secondary-custom" style="font-size: 0.75rem"
+                >* Campos obligatorios</span
+              >
             </div>
 
-            <div class="mb-3">
-              <label for="task-description" class="form-label text-white fw-semibold small">Descripción</label>
-              <textarea class="form-control form-control-housky" id="task-description" rows="3" placeholder="Seleccionar los proyectos destacados, ordenar el recorrido..."></textarea>
-            </div>
+            <form id="task-form" class="needs-validation" novalidate>
+              <div class="mb-3">
+                <label
+                  for="task-title"
+                  class="form-label text-white fw-semibold small"
+                  >Título
+                  <span style="color: var(--accent-orange)">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control form-control-housky"
+                  id="task-title"
+                  placeholder="Ej. Preparar presentación del portafolio"
+                  required
+                />
+                <div class="invalid-feedback">Por favor ingresa un título.</div>
+              </div>
 
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="task-duedate" class="form-label text-white fw-semibold small">Fecha prevista <span style="color: var(--accent-orange);">*</span></label>
-                <input type="date" class="form-control form-control-housky" id="task-duedate" required>
+              <div class="mb-3">
+                <label
+                  for="task-description"
+                  class="form-label text-white fw-semibold small"
+                  >Descripción</label
+                >
+                <textarea
+                  class="form-control form-control-housky"
+                  id="task-description"
+                  rows="3"
+                  placeholder="Seleccionar los proyectos destacados, ordenar el recorrido..."
+                ></textarea>
               </div>
-              <div class="col-md-6 mb-3">
-                <label for="task-time" class="form-label text-white fw-semibold small">Hora de entrega</label>
-                <input type="time" class="form-control form-control-housky" id="task-time" value="10:00">
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="task-project" class="form-label text-white fw-semibold small">Proyecto</label>
-                <select class="form-select form-select-housky" id="task-project">
-                  <option value="Portafolio" selected>Portafolio</option>
-                  <option value="Marca personal">Marca personal</option>
-                  <option value="Aprendizaje">Aprendizaje</option>
-                </select>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="task-status" class="form-label text-white fw-semibold small">Estado</label>
-                <select class="form-select form-select-housky" id="task-status">
-                  <option value="pendiente" selected>Pendiente</option>
-                  <option value="en-curso">En curso</option>
-                  <option value="completada">Completada</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label text-white fw-semibold small">Prioridad</label>
-              <div class="d-flex gap-2" id="priority-group">
-                <button type="button" class="btn priority-pill flex-grow-1 py-2 text-center" data-priority="baja"><i class="bi bi-dash me-1"></i> Baja</button>
-                <button type="button" class="btn priority-pill flex-grow-1 py-2 text-center" data-priority="media"><i class="bi bi-dash me-1"></i> Media</button>
-                <button type="button" class="btn priority-pill flex-grow-1 py-2 text-center active" data-priority="alta"><i class="bi bi-flag-fill me-1" style="color: var(--accent-orange);"></i> Alta</button>
-              </div>
-              <input type="hidden" id="task-priority" value="alta">
-            </div>
-
-            <div class="mb-4">
-              <label class="form-label text-white fw-semibold small">Etiquetas</label>
-              <div class="p-2 rounded border-custom d-flex flex-wrap gap-2 align-items-center" style="background-color: #0b0f19;">
-                <span class="badge bg-secondary bg-opacity-25 text-white border border-custom px-2 py-1">Presentación</span>
-                <span class="badge bg-secondary bg-opacity-25 text-white border border-custom px-2 py-1">Personal</span>
-                <span class="text-secondary-custom small ps-1" style="font-size: 0.8rem; cursor: pointer;">+ Agregar etiqueta</span>
-              </div>
-            </div>
-
-            <div class="p-3 rounded border-custom mb-4 d-flex align-items-center justify-content-between" style="background-color: #0b0f19;">
-              <div class="d-flex align-items-center gap-3">
-                <i class="bi bi-bell fs-5" style="color: var(--accent-orange);"></i>
-                <div>
-                  <div class="text-white fw-semibold small mb-0">Recordarme antes de la entrega</div>
-                  <small class="text-secondary-custom" style="font-size: 0.75rem;" id="reminder-preview-text">30 min antes</small>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label
+                    for="task-duedate"
+                    class="form-label text-white fw-semibold small"
+                    >Fecha prevista
+                    <span style="color: var(--accent-orange)">*</span></label
+                  >
+                  <input
+                    type="date"
+                    class="form-control form-control-housky"
+                    id="task-duedate"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label
+                    for="task-time"
+                    class="form-label text-white fw-semibold small"
+                    >Hora de entrega</label
+                  >
+                  <input
+                    type="time"
+                    class="form-control form-control-housky"
+                    id="task-time"
+                    value="10:00"
+                  />
                 </div>
               </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="reminder-switch" checked>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label
+                    for="task-project"
+                    class="form-label text-white fw-semibold small"
+                    >Proyecto</label
+                  >
+                  <select
+                    class="form-select form-select-housky"
+                    id="task-project"
+                    required
+                  >
+                    <option value="" selected disabled>Selecciona un proyecto</option>
+                    <option value="Portafolio">Portafolio</option>
+                    <option value="Marca personal">Marca personal</option>
+                    <option value="Aprendizaje">Aprendizaje</option>
+                    <option value="Aprendizaje">Otra actividad</option>
+                  </select>
+                  <div class="invalid-feedback">Por favor selecciona un proyecto.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label
+                    for="task-status"
+                    class="form-label text-white fw-semibold small"
+                    >Estado</label
+                  >
+                  <select
+                    class="form-select form-select-housky"
+                    id="task-status"
+                    required
+                  >
+                    <option value="" selected disabled>Selecciona un estado</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="en-curso">En curso</option>
+                    <option value="completada">Completada</option>
+                  </select>
+                  <div class="invalid-feedback">Por favor selecciona un estado.</div>
+                </div>
               </div>
-            </div>
 
-            <div class="d-flex justify-content-between align-items-center pt-3 border-top border-custom">
-              <span class="text-muted-custom" style="font-size: 0.75rem;">Solo tú puedes ver esta tarea.</span>
-              <div class="d-flex gap-2">
-                <a href="index.html" class="btn btn-outline-secondary px-4 text-white border-custom">Cancelar</a>
-                <button type="submit" class="btn btn-primary-housky px-4">
-                  <i class="bi bi-plus-lg me-1"></i> Crear tarea
-                </button>
+              <div class="mb-3">
+                <label class="form-label text-white fw-semibold small"
+                  >Prioridad</label
+                >
+                <div class="d-flex gap-2" id="priority-group">
+                  <button
+                    type="button"
+                    class="btn priority-pill flex-grow-1 py-2 text-center"
+                    data-priority="baja"
+                  >
+                    <i class="bi bi-dash me-1"></i> Baja
+                  </button>
+                  <button
+                    type="button"
+                    class="btn priority-pill flex-grow-1 py-2 text-center"
+                    data-priority="media"
+                  >
+                    <i class="bi bi-dash me-1"></i> Media
+                  </button>
+                  <button
+                    type="button"
+                    class="btn priority-pill flex-grow-1 py-2 text-center active"
+                    data-priority="alta"
+                  >
+                    <i
+                      class="bi bi-flag-fill me-1"
+                      style="color: var(--accent-orange)"
+                    ></i>
+                    Alta
+                  </button>
+                </div>
+                <input type="hidden" id="task-priority" value="alta" />
               </div>
-            </div>
 
-          </form>
+              <div
+                class="p-3 rounded border-custom mb-4 d-flex align-items-center justify-content-between"
+                style="background-color: #0b0f19"
+              >
+                <div class="d-flex align-items-center gap-3">
+                  <i
+                    class="bi bi-bell fs-5"
+                    style="color: var(--accent-orange)"
+                  ></i>
+                  <div>
+                    <div class="text-white fw-semibold small mb-0">
+                      Recordarme antes de la entrega
+                    </div>
+                    <small
+                      class="text-secondary-custom"
+                      style="font-size: 0.75rem"
+                      id="reminder-preview-text"
+                      >30 min antes</small
+                    >
+                  </div>
+                </div>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="reminder-switch"
+                    checked
+                  />
+                </div>
+              </div>
 
+              <div
+                class="d-flex justify-content-between align-items-center pt-3 border-top border-custom"
+              >
+                <span class="text-muted-custom" style="font-size: 0.75rem"
+                  >Solo tú puedes ver esta tarea.</span
+                >
+                <div class="d-flex gap-2">
+                  <a
+                    href="index.html"
+                    class="btn btn-outline-secondary px-4 text-white border-custom"
+                    >Cancelar</a
+                  >
+                  <button type="submit" class="btn btn-primary-housky px-4">
+                    <i class="bi bi-plus-lg me-1"></i> Crear tarea
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
 
-      <!-- Columna Derecha: Vista Previa y Consejos -->
-      <div class="col-12 col-xl-5 d-flex flex-column gap-4">
-        
-        <div>
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="text-white fw-semibold small">Así se verá tu tarea</span>
-            <span class="badge bg-surface-custom border-custom text-secondary-custom" style="font-size: 0.65rem;">Borrador</span>
+        <!-- columna derecha -->
+        <div class="col-12 col-xl-5 d-flex flex-column gap-4">
+          <div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="text-white fw-semibold small"
+                >Así se verá tu tarea</span
+              >
+              <span
+                class="badge bg-surface-custom border-custom text-secondary-custom"
+                style="font-size: 0.65rem"
+                >Borrador</span
+              >
+            </div>
+
+            <div class="preview-task-card p-4">
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <span
+                  class="text-uppercase text-secondary-custom fw-bold"
+                  style="font-size: 0.65rem"
+                  id="preview-project"
+                  >PORTAFOLIO</span
+                >
+                <div class="text-secondary-custom small">
+                  <i class="bi bi-three-dots"></i>
+                </div>
+              </div>
+
+              <h5
+                class="fw-bold text-white mb-2"
+                id="preview-title"
+                style="font-size: 1.1rem"
+              >
+                Preparar presentación del portafolio
+              </h5>
+              <p
+                class="text-secondary-custom small mb-3"
+                id="preview-desc"
+                style="font-size: 0.8rem; line-height: 1.4"
+              >
+                Seleccionar los proyectos destacados, ordenar el recorrido y
+                preparar una presentación breve...
+              </p>
+
+              <div class="d-flex flex-wrap gap-2 mb-3">
+                <span
+                  class="badge bg-surface-custom border-custom"
+                  id="preview-priority-badge"
+                  style="font-size: 0.65rem; color: var(--accent-orange)"
+                  >Prioridad alta</span
+                >
+                <span
+                  class="badge bg-surface-custom border-custom text-secondary-custom"
+                  id="preview-status-badge"
+                  style="font-size: 0.65rem"
+                  >Pendiente</span
+                >
+              </div>
+
+              <div
+                class="d-flex justify-content-between align-items-center pt-3 border-top border-custom text-secondary-custom small"
+              >
+                <span id="preview-date"
+                  ><i class="bi bi-calendar3 me-1"></i> Sin fecha límite</span
+                >
+                <div
+                  class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold"
+                  style="width: 24px; height: 24px; font-size: 0.6rem"
+                >
+                  AR
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="preview-task-card p-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <span class="text-uppercase text-secondary-custom fw-bold" style="font-size: 0.65rem;" id="preview-project">PORTAFOLIO</span>
-              <div class="text-secondary-custom small"><i class="bi bi-three-dots"></i></div>
-            </div>
-            
-            <h5 class="fw-bold text-white mb-2" id="preview-title" style="font-size: 1.1rem;">Preparar presentación del portafolio</h5>
-            <p class="text-secondary-custom small mb-3" id="preview-desc" style="font-size: 0.8rem; line-height: 1.4;">
-              Seleccionar los proyectos destacados, ordenar el recorrido y preparar una presentación breve...
-            </p>
-
-            <div class="d-flex flex-wrap gap-2 mb-3">
-              <span class="badge bg-surface-custom border-custom" id="preview-priority-badge" style="font-size: 0.65rem; color: var(--accent-orange);">Prioridad alta</span>
-              <span class="badge bg-surface-custom border-custom text-secondary-custom" id="preview-status-badge" style="font-size: 0.65rem;">Pendiente</span>
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center pt-3 border-top border-custom text-secondary-custom small">
-              <span id="preview-date"><i class="bi bi-calendar3 me-1"></i> Sin fecha límite</span>
-              <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold" style="width: 24px; height: 24px; font-size: 0.6rem;">AR</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="preview-task-card p-4">
-          <div class="d-flex align-items-start gap-3">
-            <div class="fs-4" style="color: var(--accent-orange);"><i class="bi bi-lightbulb"></i></div>
-            <div>
-              <h6 class="text-white fw-bold mb-1">Empieza con un verbo.</h6>
-              <p class="text-secondary-custom small mb-2" style="font-size: 0.8rem;">
-                Preparar, diseñar, publicar. Un título que invita a actuar te ayuda a saber cuál es el siguiente paso.
-              </p>
-              <span class="text-muted-custom" style="font-size: 0.7rem;">La claridad también es productividad.</span>
+            <div class="d-flex align-items-start gap-3">
+              <div class="fs-4" style="color: var(--accent-orange)">
+                <i class="bi bi-lightbulb"></i>
+              </div>
+              <div>
+                <h6 class="text-white fw-bold mb-1">Empieza con un verbo.</h6>
+                <p
+                  class="text-secondary-custom small mb-2"
+                  style="font-size: 0.8rem"
+                >
+                  Preparar, diseñar, publicar. Un título que invita a actuar te
+                  ayuda a saber cuál es el siguiente paso.
+                </p>
+                <span class="text-muted-custom" style="font-size: 0.7rem"
+                  >La claridad también es productividad.</span
+                >
+              </div>
             </div>
           </div>
         </div>
-
       </div>
+    </main>
 
-    </div>
-
-  </main>
-
-  <!-- Bootstrap JS Bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Controlador Único de Formulario -->
-  <script type="module" src="./js/adapters/inbound/dom/taskFormController.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      type="module"
+      src="./js/adapters/inbound/dom/taskFormController.js"
+    ></script>
+    <script type="module" src="./js/shared/currentDate.js"></script>
+  </body>
 </html>
