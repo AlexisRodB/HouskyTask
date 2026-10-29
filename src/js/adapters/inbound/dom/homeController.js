@@ -14,9 +14,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const totalCount = tasks.length;
 
     // Actualizar elementos en el DOM de métricas
-    document.getElementById('metric-pending-count').textContent = String(pendingCount).padStart(2, '0');
-    document.getElementById('metric-inprogress-count').textContent = String(inProgressCount).padStart(2, '0');
-    document.getElementById('metric-completed-count').textContent = String(completedCount).padStart(2, '0');
+    const metricPending = document.getElementById('metric-pending-count');
+    const metricInProg = document.getElementById('metric-inprogress-count');
+    const metricComp = document.getElementById('metric-completed-count');
+
+    if (metricPending) metricPending.textContent = String(pendingCount).padStart(2, '0');
+    if (metricInProg) metricInProg.textContent = String(inProgressCount).padStart(2, '0');
+    if (metricComp) metricComp.textContent = String(completedCount).padStart(2, '0');
 
     // actualizar texto de bienvenida superior
     const welcomeSummary = document.getElementById('welcome-summary');
@@ -57,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       profileProjectsCount.textContent = `${uniqueProjectsLength} proyecto${uniqueProjectsLength === 1 ? '' : 's'} · CV actualizado`;
     }
 
-    // cargar fecha
+    // cargar foco de hoy
     const todayFocusCard = document.getElementById('today-focus-card');
     const todayFocus = tasks.find(t => t.status === 'en-curso' || t.status === 'pendiente') || tasks[0];
 
@@ -87,6 +91,46 @@ document.addEventListener('DOMContentLoaded', async () => {
             <h6 class="text-white fw-bold">¡Todo al día!</h6>
             <p class="text-secondary small mb-3">No tienes tareas pendientes por ahora.</p>
             <a href="agregarTarea.html" class="btn btn-primary-housky btn-sm w-100">Crear nueva tarea</a>
+          </div>
+        `;
+      }
+    }
+
+    // ==========================================
+    // RENDERIZAR PRÓXIMOS 7 DÍAS (CON ESTADO VACÍO)
+    // ==========================================
+    const upcomingContainer = document.getElementById('upcoming-tasks-container');
+    const upcomingTasks = tasks.filter(t => t.status !== 'completada');
+
+    if (upcomingContainer) {
+      if (upcomingTasks.length === 0) {
+        upcomingContainer.innerHTML = `
+          <div class="text-center py-4 px-3 rounded bg-dark border border-secondary bg-opacity-25">
+            <i class="bi bi-check2-circle text-warning fs-2 mb-2"></i>
+            <h6 class="text-white fw-bold mb-1">¡Todo al día por aquí!</h6>
+            <p class="text-secondary small mb-3">No tienes tareas pendientes. Disfruta tu tiempo libre o agrega un nuevo plan cuando estés listo.</p>
+            <a href="agregarTarea.html" class="btn btn-sm btn-primary-housky">Agregar nueva tarea</a>
+          </div>
+        `;
+      } else {
+        upcomingContainer.innerHTML = `
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <span class="text-white fw-bold">Próximos 7 días</span>
+            <i class="bi bi-calendar3 text-warning"></i>
+          </div>
+          <div class="d-flex flex-column gap-2">
+            ${upcomingTasks.slice(0, 3).map(t => `
+              <div class="p-2 rounded bg-dark border border-secondary d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="text-white fw-bold small mb-0">${t.title}</div>
+                  <small class="text-secondary" style="font-size: 0.7rem;">${t.dueDate || 'Sin fecha límite'} · ${t.project || 'General'}</small>
+                </div>
+                <span class="badge-priority-${t.priority}" style="font-size: 0.55rem;">${t.priority}</span>
+              </div>
+            `).join('')}
+          </div>
+          <div class="mt-3 text-end">
+            <a href="calendario.html" class="text-warning text-decoration-none small fw-bold">Ver calendario &rarr;</a>
           </div>
         `;
       }
