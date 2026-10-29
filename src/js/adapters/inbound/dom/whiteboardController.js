@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("canvas-container");
   if (!canvas || !container) return;
 
-  // Añadimos willReadFrequently para optimizar el rendimiento de las figuras geométricas
+  // optimizar el rendimiento de las figuras geométricas
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
   let history = [];
@@ -61,8 +61,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const sizeLabel = document.getElementById("size-label");
   const clearBtn = document.getElementById("clear-canvas-btn");
   const saveBtn = document.getElementById("save-canvas-btn");
+  const shapeDetails = {
+    rect: { name: "Cuadrado", icon: "bi-square" },
+    circle: { name: "Círculo", icon: "bi-circle" },
+    line: { name: "Línea", icon: "bi-slash-lg" },
+    ellipse: { name: "Elipse", icon: "bi-ellipse" },
+    triangle: { name: "Triángulo", icon: "bi-triangle" },
+    diamond: { name: "Rombo", icon: "bi-diamond" },
+    pentagon: { name: "Pentágono", icon: "bi-pentagon" },
+    hexagon: { name: "Hexágono", icon: "bi-hexagon" },
+    arrow: { name: "Flecha", icon: "bi-arrow-up-right" },
+  };
 
-  // Botones principales de herramientas básicas
+  // botones principales
   const baseTools = [penBtn, eraserBtn];
 
   function setBaseToolActive(activeBtn) {
@@ -89,14 +100,14 @@ document.addEventListener("DOMContentLoaded", () => {
     setBaseToolActive(eraserBtn);
   });
 
-  // Controlar selección de figuras desde el dropdown
+  // Controlar seleccion de figuras desde el dropdown
   shapeOptions.forEach((opt) => {
     opt.addEventListener("click", (e) => {
       e.preventDefault();
       const shape = e.currentTarget.getAttribute("data-shape");
       currentTool = shape; // 'rect', 'circle', o 'line'
 
-      // Activar visualmente el botón de formas
+      // Activar visualmente el boton de formas
       baseTools.forEach((b) => {
         b.classList.remove("active", "text-white");
         b.classList.add("text-secondary");
@@ -104,23 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
       shapesDropdownBtn.classList.add("active", "text-white");
       shapesDropdownBtn.classList.remove("text-secondary");
 
-      const iconClass =
-        shape === "rect"
-          ? "bi-square"
-          : shape === "circle"
-            ? "bi-circle"
-            : "bi-slash-lg";
-      const shapeName =
-        shape === "rect"
-          ? "Cuadrado"
-          : shape === "circle"
-            ? "Círculo"
-            : "Línea";
-      shapesDropdownBtn.innerHTML = `<i class="bi ${iconClass}"></i> <span class="small" style="font-size: 0.75rem;">${shapeName}</span>`;
+      const { name, icon } = shapeDetails[shape];
+      shapesDropdownBtn.innerHTML = `<i class="bi ${icon}"></i> <span class="small" style="font-size: 0.75rem;">${name}</span>`;
     });
   });
 
-  // Slider de tamaño intuitivo
+  // slider de tamaño
   brushSizeInput.addEventListener("input", (e) => {
     const val = e.target.value;
     sizeLabel.textContent = `${val}px`;
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.beginPath();
       ctx.moveTo(startX, startY);
     } else {
-      // Capturar el canvas antes de empezar a estirar la figura geométrica
+      // capturar el canvas antes de empezar a estirar la figura geometrica
       snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
     }
   }
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ctx.lineTo(x, y);
       ctx.stroke();
     } else if (snapshot) {
-      // Restaurar captura previa para renderizar la figura dinámicamente al arrastrar
+      // Restaurar captura previa para renderizar la figura dinamicamente al arrastrar
       ctx.putImageData(snapshot, 0, 0);
 
       if (currentTool === "rect") {
@@ -172,6 +172,64 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.beginPath();
         ctx.moveTo(startX, startY);
         ctx.lineTo(x, y);
+        ctx.stroke();
+      } else if (currentTool === "ellipse") {
+        const centerX = (startX + x) / 2;
+        const centerY = (startY + y) / 2;
+        ctx.beginPath();
+        ctx.ellipse(
+          centerX,
+          centerY,
+          Math.abs(x - startX) / 2,
+          Math.abs(y - startY) / 2,
+          0,
+          0,
+          2 * Math.PI,
+        );
+        ctx.stroke();
+      } else if (
+        currentTool === "triangle" ||
+        currentTool === "diamond" ||
+        currentTool === "pentagon" ||
+        currentTool === "hexagon"
+      ) {
+        const sides = {
+          triangle: 3,
+          diamond: 4,
+          pentagon: 5,
+          hexagon: 6,
+        }[currentTool];
+        const centerX = (startX + x) / 2;
+        const centerY = (startY + y) / 2;
+        const radiusX = Math.abs(x - startX) / 2;
+        const radiusY = Math.abs(y - startY) / 2;
+
+        ctx.beginPath();
+        for (let side = 0; side < sides; side++) {
+          const angle = (side * 2 * Math.PI) / sides - Math.PI / 2;
+          const pointX = centerX + radiusX * Math.cos(angle);
+          const pointY = centerY + radiusY * Math.sin(angle);
+          if (side === 0) ctx.moveTo(pointX, pointY);
+          else ctx.lineTo(pointX, pointY);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      } else if (currentTool === "arrow") {
+        const angle = Math.atan2(y - startY, x - startX);
+        const headLength = Math.max(12, Number(brushSizeInput.value) * 3);
+
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(x, y);
+        ctx.moveTo(
+          x - headLength * Math.cos(angle - Math.PI / 6),
+          y - headLength * Math.sin(angle - Math.PI / 6),
+        );
+        ctx.lineTo(x, y);
+        ctx.lineTo(
+          x - headLength * Math.cos(angle + Math.PI / 6),
+          y - headLength * Math.sin(angle + Math.PI / 6),
+        );
         ctx.stroke();
       }
     }

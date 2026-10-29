@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const projectSelect = document.getElementById("task-project");
   const statusSelect = document.getElementById("task-status");
   const priorityInput = document.getElementById("task-priority");
+  const priorityGroup = document.getElementById("priority-group");
+  const priorityFeedback = document.getElementById("priority-feedback");
   const priorityBtns = document.querySelectorAll(".priority-pill");
 
   const previewTitle = document.getElementById("preview-title");
@@ -33,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (descInput) {
     descInput.addEventListener("input", (e) => {
       previewDesc.textContent = e.target.value || "Sin descripción detallada.";
+      descInput.classList.remove("is-invalid");
     });
   }
 
@@ -53,7 +56,17 @@ document.addEventListener("DOMContentLoaded", () => {
   if (dateInput) {
     dateInput.addEventListener("change", (e) => {
       if (e.target.value) {
-        previewDate.innerHTML = `<i class="bi bi-calendar3 me-1"></i> ${e.target.value} · ${timeInput?.value || ""}`;
+        const timeText = timeInput?.value ? ` · ${timeInput.value}` : "";
+        previewDate.innerHTML = `<i class="bi bi-calendar3 me-1"></i> ${e.target.value}${timeText}`;
+      }
+    });
+  }
+
+  if (timeInput) {
+    timeInput.addEventListener("change", () => {
+      if (dateInput.value) {
+        const timeText = timeInput.value ? ` · ${timeInput.value}` : "";
+        previewDate.innerHTML = `<i class="bi bi-calendar3 me-1"></i> ${dateInput.value}${timeText}`;
       }
     });
   }
@@ -66,6 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const val = btn.getAttribute("data-priority");
       if (priorityInput) priorityInput.value = val;
       if (previewPriority) previewPriority.textContent = `Prioridad ${val}`;
+      priorityGroup.classList.remove("is-invalid");
+      priorityFeedback.classList.remove("d-block");
     });
   });
 
@@ -78,12 +93,23 @@ document.addEventListener("DOMContentLoaded", () => {
         titleInput.classList.add("is-invalid");
       }
 
+      const isDescriptionProvided = Boolean(descInput.value.trim());
       const isProjectSelected = Boolean(projectSelect.value);
       const isStatusSelected = Boolean(statusSelect.value);
+      const isPrioritySelected = Boolean(priorityInput.value);
+      descInput.classList.toggle("is-invalid", !isDescriptionProvided);
       projectSelect.classList.toggle("is-invalid", !isProjectSelected);
       statusSelect.classList.toggle("is-invalid", !isStatusSelected);
+      priorityGroup.classList.toggle("is-invalid", !isPrioritySelected);
+      priorityFeedback.classList.toggle("d-block", !isPrioritySelected);
 
-      if (!titleInput.value.trim() || !isProjectSelected || !isStatusSelected) {
+      if (
+        !titleInput.value.trim() ||
+        !isDescriptionProvided ||
+        !isProjectSelected ||
+        !isStatusSelected ||
+        !isPrioritySelected
+      ) {
         return;
       }
 
@@ -91,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         title: titleInput.value.trim(),
         description: descInput.value.trim(),
         dueDate: dateInput.value || new Date().toISOString().split("T")[0],
-        time: timeInput?.value || "10:00",
+        time: timeInput?.value || "",
         project: projectSelect.value,
         status: statusSelect.value,
         priority: priorityInput.value,

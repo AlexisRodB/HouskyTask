@@ -39,3 +39,36 @@
   height: 100%;
   display: block;
 }
+
+.whiteboard-main {
+  height: 100vh;
+  overflow: hidden;
+}
+
+@media (max-width: 991.98px) {
+  .whiteboard-main {
+    height: auto;
+    min-height: calc(100dvh - 65px);
+    overflow: visible;
+  }
+
+  .whiteboard-toolbar {
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+
+  .whiteboard-container {
+    min-height: 55vh;
+    flex: 1 0 55vh;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .whiteboard-toolbar {
+    gap: 0.35rem !important;
+  }
+
+  .whiteboard-toolbar .vr {
+    display: none;
+  }
+}

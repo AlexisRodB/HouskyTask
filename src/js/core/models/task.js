@@ -4,7 +4,7 @@ export class Task {
     title,
     description = '',
     dueDate,
-    time = '10:00',
+    time = '',
     priority = 'media',
     status = 'pendiente',
     project = 'General',
