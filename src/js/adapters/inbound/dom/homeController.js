@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
     if (profileProjectsCount) {
       const uniqueProjectsLength = Object.keys(projectsMap).length;
-      profileProjectsCount.textContent = `${uniqueProjectsLength} proyecto${uniqueProjectsLength === 1 ? "" : "s"} · CV actualizado`;
+      profileProjectsCount.textContent = `${uniqueProjectsLength} proyecto${uniqueProjectsLength === 1 ? "" : "s"}`;
     }
 
     // cargar foco de hoy
