@@ -32,6 +32,18 @@ body {
   color: var(--text-muted) !important;
 }
 
+.form-control-housky[type="date"],
+.form-control-housky[type="time"] {
+  color-scheme: dark;
+}
+
+.form-control-housky[type="date"]::-webkit-calendar-picker-indicator,
+.form-control-housky[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(55%) sepia(89%) saturate(2112%) hue-rotate(2deg)
+    brightness(102%) contrast(106%);
+  cursor: pointer;
+}
+
 /* Botones de prioridad*/
 .priority-pill {
   background-color: #0b0f19 !important;
