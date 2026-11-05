@@ -69,6 +69,5 @@ La configuración del proyecto está en [`vercel.json`](./vercel.json). Para pub
 1. Importa el repositorio `AlexisRodB/HouskyTask` desde el panel de Vercel y autoriza el acceso a GitHub si se solicita.
 2. Conserva la configuración definida por `vercel.json`; no selecciones una configuración de GitHub Pages.
 3. Despliega el proyecto y espera a que el proceso termine correctamente.
-4. Copia la URL de producción asignada por Vercel y agrégala en la sección **Enlaces del proyecto** de este README.
 
 La configuración de Vercel sirve los archivos HTML de `src` y dirige la ruta raíz a la página de inicio.
