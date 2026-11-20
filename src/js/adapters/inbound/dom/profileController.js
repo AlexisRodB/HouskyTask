@@ -1,7 +1,7 @@
-import { LocalStorageTaskRepo } from "../../outbound/storage/LocalStorageTaskRepo.js";
+import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const taskRepo = new LocalStorageTaskRepo();
+  const taskRepo = new ApiTaskRepo();
 
   // 1. Estadísticas de tareas
   const totalTasksEl = document.getElementById("profile-total-tasks");

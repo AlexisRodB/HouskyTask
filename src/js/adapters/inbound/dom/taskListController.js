@@ -1,7 +1,7 @@
-import { LocalStorageTaskRepo } from "../../outbound/storage/LocalStorageTaskRepo.js";
+import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const taskRepo = new LocalStorageTaskRepo();
+  const taskRepo = new ApiTaskRepo();
   const container = document.getElementById("tasks-list-container");
   const filterButtons = document.querySelectorAll(".filter-btn");
 
