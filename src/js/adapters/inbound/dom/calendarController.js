@@ -1,7 +1,7 @@
-import { LocalStorageTaskRepo } from "../../outbound/storage/LocalStorageTaskRepo.js";
+import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const taskRepo = new LocalStorageTaskRepo();
+  const taskRepo = new ApiTaskRepo();
   const gridContainer = document.getElementById("calendar-grid-container");
   const monthTitle = document.getElementById("current-month-title");
   const subtitleText = document.getElementById("subtitle-text");

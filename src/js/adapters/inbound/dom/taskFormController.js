@@ -1,8 +1,8 @@
-import { LocalStorageTaskRepo } from "../../outbound/storage/LocalStorageTaskRepo.js";
+import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
 import { CreateTask } from "../../../core/use-cases/CreateTask.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const taskRepo = new LocalStorageTaskRepo();
+  const taskRepo = new ApiTaskRepo();
   const createTask = new CreateTask(taskRepo);
   const form = document.getElementById("task-form");
 
