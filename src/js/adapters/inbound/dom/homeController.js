@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const taskRepo = new ApiTaskRepo();
 
   try {
-    // obtener todas las tareas almacenadas
     const tasks = await taskRepo.findAll();
 
     // calcular metricas pendientes, en curso y completadas
@@ -15,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     ).length;
     const totalCount = tasks.length;
 
-    // Actualizar elementos en el DOM de métricas
+    // Actualizar elementos
     const metricPending = document.getElementById("metric-pending-count");
     const metricInProg = document.getElementById("metric-inprogress-count");
     const metricComp = document.getElementById("metric-completed-count");
@@ -30,7 +29,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     // actualizar texto de bienvenida superior
     const welcomeSummary = document.getElementById("welcome-summary");
     if (welcomeSummary) {
-      welcomeSummary.textContent = `Hola, Alexis. Tienes ${pendingCount + inProgressCount} entregas pendientes. Hagamos espacio para avanzar.`;
+      const currentUser = JSON.parse(
+        localStorage.getItem("houskytask_user") || "{}",
+      );
+      const firstName = currentUser.fullName?.trim().split(/\s+/)[0] || "Usuario";
+      welcomeSummary.textContent = `Hola, ${firstName}. Tienes ${pendingCount + inProgressCount} entregas pendientes. Hagamos espacio para avanzar.`;
     }
 
     // proyectos sidebar
@@ -108,9 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
-    // ==========================================
-    // RENDERIZAR PRÓXIMOS 7 DÍAS (CON ESTADO VACÍO)
-    // ==========================================
+    // RENDERIZAR PRÓXIMOS 7 DÍAS
     const upcomingContainer = document.getElementById(
       "upcoming-tasks-container",
     );

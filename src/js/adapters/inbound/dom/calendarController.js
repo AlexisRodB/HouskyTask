@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Estado actual del calendario
   let viewDate = new Date();
-  let selectedDateStr = new Date().toISOString().split("T")[0]; // YYYY-MM-DD por defecto hoy
+  let selectedDateStr = new Date().toISOString().split("T")[0];
 
   const monthsNames = [
     "enero",
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (totalTasksCountEl)
       totalTasksCountEl.textContent = `${monthTasksTotal} tarea${monthTasksTotal === 1 ? "" : "s"} este mes`;
 
-    // Calcular días del mes
+    // Calcular dias del mes
     const firstDayOfMonth = new Date(year, month, 1);
     const lastDayOfMonth = new Date(year, month + 1, 0);
 
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       dayCount++;
     }
 
-    // 3. Días del mes siguiente (relleno para completar la última semana)
+    // Dias del mes siguiente (relleno para completar la última semana)
     let nextMonthDay = 1;
     while (dayCount % 7 !== 0) {
       const nMonth = month === 11 ? 1 : month + 2;

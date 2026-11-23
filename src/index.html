@@ -138,29 +138,24 @@
           class="pt-3 border-top"
           style="border-color: var(--border-color) !important"
         >
-          <div class="d-flex align-items-center">
-            <div
-              class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2"
-              style="
-                width: 36px;
-                height: 36px;
-                background: linear-gradient(
-                  135deg,
-                  var(--accent-orange),
-                  var(--accent-green)
-                );
-              "
+          <div class="d-flex align-items-center justify-content-between">
+            <a
+              href="perfil.html"
+              class="d-flex align-items-center text-decoration-none text-white gap-2"
             >
-              AR
-            </div>
-            <div>
-              <h6 class="mb-0 text-white" style="font-size: 0.9rem">
-                Alexis Rodríguez B.
-              </h6>
-              <small class="text-secondary" style="font-size: 0.75rem"
-                >Mi espacio personal</small
-              >
-            </div>
+              <span class="user-avatar user-avatar--small">
+                <span class="user-initials-display">--</span>
+                <img class="user-avatar-image" alt="Foto de perfil" hidden />
+              </span>
+              <span class="small fw-semibold user-fullname-display">Cargando...</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary btn-logout"
+              title="Cerrar sesión"
+            >
+              <i class="bi bi-box-arrow-right"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -252,33 +247,24 @@
         class="mt-auto pt-3 border-top"
         style="border-color: var(--border-color) !important"
       >
-        <div class="d-flex align-items-center">
-          <div
-            class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2"
-            style="
-              width: 36px;
-              height: 36px;
-              background: linear-gradient(
-                135deg,
-                var(--accent-orange),
-                var(--accent-green)
-              );
-            "
+        <div class="d-flex align-items-center justify-content-between">
+          <a
+            href="perfil.html"
+            class="d-flex align-items-center text-decoration-none text-white gap-2 overflow-hidden"
           >
-            AR
-          </div>
-          <div class="overflow-hidden">
-            <h6
-              class="mb-0 text-white"
-              style="font-size: 0.9rem"
-              id="user-name-sidebar"
-            >
-              Alexis Rodríguez B.
-            </h6>
-            <small class="text-secondary" style="font-size: 0.75rem"
-              >Mi espacio personal</small
-            >
-          </div>
+            <span class="user-avatar user-avatar--small">
+              <span class="user-initials-display">--</span>
+              <img class="user-avatar-image" alt="Foto de perfil" hidden />
+            </span>
+            <span class="small fw-semibold user-fullname-display text-truncate">Cargando...</span>
+          </a>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary btn-logout"
+            title="Cerrar sesión"
+          >
+            <i class="bi bi-box-arrow-right"></i>
+          </button>
         </div>
       </div>
     </nav>
@@ -438,44 +424,37 @@
           <!-- perfil -->
           <div class="card-housky">
             <div class="d-flex justify-content-between align-items-center mb-2">
-              <span
-                class="text-uppercase text-secondary fw-bold"
-                style="font-size: 0.7rem"
+              <span class="text-uppercase text-secondary fw-bold profile-card-label"
                 >Mi perfil</span
               >
               <i class="bi bi-arrow-up-right text-secondary"></i>
             </div>
             <div class="d-flex align-items-center gap-3 mb-3">
-              <div
-                class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
-                style="
-                  width: 48px;
-                  height: 48px;
-                  background-color: var(--accent-orange) !important;
-                "
-              >
-                AR
-              </div>
+              <span class="user-avatar user-avatar--medium">
+                <span class="user-initials-display">--</span>
+                <img class="user-avatar-image" alt="Foto de perfil" hidden />
+              </span>
               <div>
-                <h6 class="mb-0 text-white fw-bold" id="profile-card-name">
-                  Alexis Rodríguez B.
+                <h6
+                  class="mb-0 text-white fw-bold user-fullname-display"
+                  id="profile-card-name"
+                >
+                  Cargando...
                 </h6>
-                <small class="text-secondary" id="profile-card-role"
-                  >Desarrollador Full Stack Junior</small
+                <small class="text-secondary user-email-display"
+                  >Cargando...</small
                 >
               </div>
             </div>
             <div
-              class="d-flex justify-content-between align-items-center pt-2 border-top"
-              style="border-color: var(--border-color) !important"
+              class="d-flex justify-content-between align-items-center pt-2 border-top profile-card-footer"
             >
               <small class="text-secondary" id="profile-card-projects-count"
                 >0 proyectos</small
               >
               <a
                 href="perfil.html"
-                class="text-decoration-none small fw-bold"
-                style="color: var(--accent-orange)"
+                class="text-decoration-none small fw-bold profile-card-link"
                 >Ver perfil <i class="bi bi-arrow-right"></i
               ></a>
             </div>
@@ -490,5 +469,6 @@
       src="./js/adapters/inbound/dom/homeController.js"
     ></script>
     <script type="module" src="./js/shared/currentDate.js"></script>
+    <script type="module" src="./js/adapters/inbound/dom/sessionGuard.js"></script>
   </body>
 </html>

@@ -3,9 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HouskyTask - Perfil Profesional</title>
+    <title>HouskyTask - Perfil</title>
     <link rel="icon" type="image/svg+xml" href="./assets/houskytask-icon.svg" />
-
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -14,42 +13,27 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-
     <link rel="stylesheet" href="./css/variables.css" />
     <link rel="stylesheet" href="./css/styles.css" />
     <link rel="stylesheet" href="./css/pages/Perfil.css" />
   </head>
   <body class="d-flex flex-column flex-lg-row">
-    <!--sidebar-->
     <nav
-      class="sidebar-desktop d-none d-lg-flex flex-column flex-shrink-0 p-3"
-      style="
-        width: 280px;
-        min-height: 100vh;
-        background-color: var(--bg-surface);
-        border-right: 1px solid var(--border-color);
-      "
+      class="profile-sidebar d-none d-lg-flex flex-column flex-shrink-0 p-3"
+      aria-label="Navegación principal"
     >
       <a
         href="index.html"
-        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none text-white"
+        class="d-flex align-items-center mb-3 text-decoration-none text-white"
       >
-        <i
-          class="bi bi-check2-square fs-4 me-2"
-          style="color: var(--accent-orange)"
-        ></i>
+        <i class="bi bi-check2-square fs-4 me-2 profile-brand-icon"></i>
         <span class="fs-5 fw-bold">HouskyTask</span>
       </a>
-      <hr style="border-color: var(--border-color)" />
+      <hr class="profile-sidebar-divider" />
 
-      <div
-        class="text-secondary small mb-2 text-uppercase fw-bold"
-        style="font-size: 0.75rem"
-      >
-        Espacio personal
-      </div>
+      <div class="profile-sidebar-heading">Espacio personal</div>
       <ul class="nav nav-pills flex-column mb-auto gap-1">
-        <li>
+        <li class="nav-item">
           <a href="index.html" class="nav-link text-secondary">
             <i class="bi bi-house-door me-2"></i> Inicio
           </a>
@@ -69,17 +53,13 @@
             <i class="bi bi-calendar3 me-2"></i> Calendario
           </a>
         </li>
-        <li class="nav-item">
+        <li>
           <a
             href="perfil.html"
-            class="nav-link active text-white"
-            style="
-              background-color: rgba(255, 107, 0, 0.15);
-              border-left: 3px solid var(--accent-orange);
-            "
+            class="nav-link active text-white profile-sidebar-active"
+            aria-current="page"
           >
             <i class="bi bi-person me-2"></i> Perfil
-            <span class="ms-1" style="color: var(--accent-orange)">•</span>
           </a>
         </li>
         <li>
@@ -89,423 +69,390 @@
         </li>
       </ul>
 
-      <div
-        class="mt-auto pt-3 border-top"
-        style="border-color: var(--border-color) !important"
-      >
-        <div class="d-flex align-items-center justify-content-between">
-          <div class="d-flex align-items-center gap-2">
-            <div
-              class="rounded-circle bg-warning text-dark fw-bold d-flex align-items-center justify-content-center"
-              style="width: 32px; height: 32px; font-size: 0.8rem"
-            >
-              AR
-            </div>
-            <div>
-              <div class="text-white fw-bold small">Alexis Rodríguez B.</div>
-              <div class="text-secondary" style="font-size: 0.65rem">
-                Mi espacio personal
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="profile-sidebar-footer">
+        <a
+          href="perfil.html"
+          class="d-flex align-items-center text-decoration-none text-white gap-2 overflow-hidden"
+        >
+          <span class="user-avatar user-avatar--small">
+            <span class="user-initials-display">--</span>
+            <img class="user-avatar-image" alt="Foto de perfil" hidden />
+          </span>
+          <span class="small fw-semibold user-fullname-display text-truncate"
+            >Cargando...</span
+          >
+        </a>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary btn-logout"
+          title="Cerrar sesión"
+          aria-label="Cerrar sesión"
+        >
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
       </div>
     </nav>
 
-    <main class="flex-grow-1 p-4 overflow-y-auto">
-      <div
-        class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary flex-wrap gap-3"
+    <main class="profile-page flex-grow-1 p-3 p-md-4 overflow-y-auto">
+      <header
+        class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom profile-page-header"
       >
         <div class="text-secondary small">
           Mi espacio <span class="mx-1">/</span>
           <span class="text-white">Perfil</span>
         </div>
-        <div class="d-flex align-items-center gap-3">
-          <span class="text-secondary small" data-current-date
-            >--/--/----</span
-          >
+        <span class="text-secondary small" data-current-date>--/--/----</span>
+      </header>
+
+      <section class="profile-content mx-auto">
+        <div
+          class="d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4"
+        >
+          <div>
+            <h1 class="fw-bold text-white mb-1">Mi perfil</h1>
+            <p class="text-secondary mb-0">
+              Administra tu información personal y revisa tu productividad.
+            </p>
+          </div>
           <button
-            class="btn btn-dark border border-secondary btn-sm text-secondary"
+            type="button"
+            class="btn btn-primary-housky"
+            data-bs-toggle="modal"
+            data-bs-target="#editProfileModal"
+            id="edit-profile-button"
           >
-            <i class="bi bi-bell"></i>
+            <i class="bi bi-pencil-square me-1"></i> Editar perfil
           </button>
         </div>
-      </div>
 
-      <!-- boton editar-->
-      <div
-        class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3"
-      >
-        <div>
-          <h1 class="fw-bold text-white mb-1 display-6">
-            El trabajo detrás de las tareas.
-          </h1>
-          <p class="text-secondary mb-0">
-            Perfil profesional • Información de desarrollo y proyectos
-            conceptuales.
-          </p>
-        </div>
-        <button
-          class="btn btn-primary-housky"
-          data-bs-toggle="modal"
-          data-bs-target="#editProfileModal"
-        >
-          <i class="bi bi-pencil-square me-1"></i> Editar perfil
-        </button>
-      </div>
-
-      <!-- layout pricnipal-->
-      <div class="row g-4">
-        <!-- Columna Izquierda: Información Principal, Sobre mí, Contacto y CV -->
-        <div class="col-12 col-xl-4 d-flex flex-column gap-4">
-          <div class="card-housky-profile p-4">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <div
-                class="avatar-circle rounded-circle d-flex align-items-center justify-content-center shadow"
-              >
-                AR
-              </div>
-              <span
-                class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-2 py-1"
-                style="font-size: 0.7rem"
-              >
-                <i class="bi bi-circle-fill me-1" style="font-size: 0.5rem"></i>
-                Disponible para proyectos
-              </span>
-            </div>
-            <h3 class="text-white fw-bold mb-1" id="profile-name-display">
-              Alexis Rodríguez
-            </h3>
-            <p class="text-secondary small mb-2">
-              Desarrollador de software full stack junior
-            </p>
-            <div class="d-flex align-items-center gap-1 text-secondary small">
-              <i class="bi bi-geo-alt text-warning"></i>
-              <span>Medellín, Colombia</span>
-            </div>
-          </div>
-
-          <div class="card-housky-profile p-4">
-            <h5 class="text-white fw-bold mb-3" style="font-size: 0.95rem">
-              Un poco sobre mí
-            </h5>
-            <p class="text-secondary small lh-base mb-3" id="profile-bio-text">
-              Desarrollador de software con un enfoque en desarrollo web, bases
-              de datos y APIs. Cuento con conocimientos en tecnologías backend y
-              frontend como Java con Spring Boot, JavaScript, Python y React,
-              además de herramientas de control de versiones y despliegue como
-              Git y Docker. Me destaco por mi capacidad de aprender rápidamente,
-              resolver problemas y adaptarme con facilidad a nuevas tecnologías.
-              Soy una persona comprometida y autodidacta, altamente interesada
-              en el aprendizaje continuo para aportar valor, innovación y
-              eficiencia a los proyectos del equipo.
-            </p>
-            <div
-              class="d-flex justify-content-between text-secondary small border-top border-secondary pt-3"
-            >
-              <span>Experiencia</span>
-              <span class="text-white fw-bold">1 año</span>
-            </div>
-            <div
-              class="d-flex justify-content-between text-secondary small pt-2"
-            >
-              <span>Enfoque</span>
-              <span class="text-white fw-bold">Web, APIs y Backend</span>
-            </div>
-          </div>
-
-          <div class="card-housky-profile p-4">
-            <h5 class="text-white fw-bold mb-3" style="font-size: 0.95rem">
-              Conectemos
-            </h5>
-            <div class="d-flex flex-column gap-3 text-secondary small">
-              <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-envelope text-warning"></i>
-                <a
-                  href="mailto:alecraftyt291@gmail.com"
-                  class="text-secondary text-decoration-none"
-                  id="contact-email"
-                  >alecraftyt291@gmail.com</a
+        <div class="row g-4">
+          <div class="col-12 col-xl-8">
+            <section class="card-housky h-100" aria-labelledby="profile-name">
+              <div class="d-flex align-items-center gap-3 flex-wrap">
+                <span
+                  class="user-avatar profile-avatar"
+                  id="profile-avatar"
+                  aria-label="Foto de perfil"
                 >
-              </div>
-              <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-telephone text-warning"></i>
-                <span id="contact-phone">+57 3053888999</span>
-              </div>
-              <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-linkedin text-warning"></i>
-                <a
-                  href="https://www.linkedin.com/in/alexisrodriguez33221"
-                  target="_blank"
-                  class="text-secondary text-decoration-none text-truncate"
-                  id="contact-linkedin"
-                  >linkedin.com/in/alexisrodriguez33221</a
-                >
-              </div>
-              <div class="d-flex align-items-center gap-2">
-                <i class="bi bi-github text-warning"></i>
-                <a
-                  href="https://github.com/AlexisRodB"
-                  target="_blank"
-                  class="text-secondary text-decoration-none"
-                  id="contact-github"
-                  >github.com/AlexisRodB</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="card-housky-profile p-3 d-flex align-items-center justify-content-between"
-          >
-            <div class="d-flex align-items-center gap-3">
-              <div
-                class="rounded bg-dark border border-secondary p-2 text-warning fs-5"
-              >
-                <i class="bi bi-file-earmark-pdf"></i>
-              </div>
-              <div>
-                <div class="text-white fw-bold small mb-0">Currículum</div>
-                <small class="text-secondary" style="font-size: 0.7rem"
-                  >PDF • Actualizado 2026</small
-                >
-              </div>
-            </div>
-            <a
-              href="./assets/CV-ALEXISRODRIGUEZ_.pdf"
-              download="CV_Alexis_Rodriguez.pdf"
-              class="btn btn-sm btn-dark border border-secondary text-warning d-flex align-items-center gap-1"
-              title="Descargar CV"
-            >
-              <i class="bi bi-download"></i> Descargar
-            </a>
-          </div>
-        </div>
-
-        <!-- Columna Derecha: Portafolio Seleccionado y Habilidades -->
-        <div class="col-12 col-xl-8 d-flex flex-column gap-4">
-          <div>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h4 class="text-white fw-bold mb-0">Portafolio seleccionado</h4>
-              <span class="text-secondary small">02 proyectos destacados</span>
-            </div>
-
-            <div class="row g-3">
-              <div class="col-12 col-md-6">
-                <div
-                  class="portfolio-card p-3 h-100 d-flex flex-column justify-content-between"
-                >
-                  <div>
-                    <div
-                      class="d-flex justify-content-between align-items-center mb-2"
-                    >
-                      <span
-                        class="badge bg-dark border border-secondary text-warning"
-                        style="font-size: 0.65rem"
-                        >Backend & Frontend</span
-                      >
-                      <i class="bi bi-arrow-up-right text-secondary"></i>
-                    </div>
-                    <h5 class="text-white fw-bold mb-1">
-                      Sistema de Giftcards
-                    </h5>
-                    <p class="text-secondary small mb-3">
-                      Plataforma integral para crear, redimir, validar y
-                      administrar tarjetas de regalo digitales de forma segura.
-                    </p>
-                  </div>
-                  <div>
-                    <div class="d-flex flex-wrap gap-1 mb-3">
-                      <span
-                        class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary"
-                        style="font-size: 0.6rem"
-                        >Spring Boot</span
-                      >
-                      <span
-                        class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary"
-                        style="font-size: 0.6rem"
-                        >Java</span
-                      >
-                      <span
-                        class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary"
-                        style="font-size: 0.6rem"
-                        >REST API</span
-                      >
-                    </div>
-                    <a
-                      href="https://github.com/AlexisRodB"
-                      target="_blank"
-                      class="text-warning text-decoration-none small fw-bold"
-                    >
-                      Ver proyecto <i class="bi bi-arrow-right"></i>
-                    </a>
-                  </div>
+                  <span class="user-initials-display">--</span>
+                  <img class="user-avatar-image" alt="Foto de perfil" hidden />
+                </span>
+                <div class="flex-grow-1">
+                  <h2
+                    class="h3 fw-bold text-white mb-1 user-fullname-display"
+                    id="profile-name"
+                  >
+                    Cargando...
+                  </h2>
+                  <p class="text-secondary mb-1 user-email-display">
+                    Cargando...
+                  </p>
+                  <span class="profile-role">Mi espacio personal</span>
                 </div>
               </div>
 
-              <div class="col-12 col-md-6">
-                <div
-                  class="portfolio-card p-3 h-100 d-flex flex-column justify-content-between"
-                >
-                  <div>
-                    <div
-                      class="d-flex justify-content-between align-items-center mb-2"
-                    >
-                      <span
-                        class="badge bg-dark border border-secondary text-info"
-                        style="font-size: 0.65rem"
-                        >E-commerce SPA</span
-                      >
-                      <i class="bi bi-arrow-up-right text-secondary"></i>
-                    </div>
-                    <h5 class="text-white fw-bold mb-1">
-                      E-commerce Chevignon
-                    </h5>
-                    <p class="text-secondary small mb-3">
-                      Desarrollo de tienda virtual para Chevignon, con
-                      catálogo dinámico, carrito de compras y experiencia de
-                      usuario fluida.
-                    </p>
-                  </div>
-                  <div>
-                    <div class="d-flex flex-wrap gap-1 mb-3">
-                      <span
-                        class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary"
-                        style="font-size: 0.6rem"
-                        >JavaScript</span
-                      >
-                      <span
-                        class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary"
-                        style="font-size: 0.6rem"
-                        >React</span
-                      >
-                      <span
-                        class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary"
-                        style="font-size: 0.6rem"
-                        >Bootstrap</span
-                      >
-                    </div>
-                    <a
-                      href="https://github.com/AlexisRodB"
-                      target="_blank"
-                      class="text-warning text-decoration-none small fw-bold"
-                    >
-                      Ver proyecto <i class="bi bi-arrow-right"></i>
-                    </a>
-                  </div>
+              <hr class="profile-divider" />
+
+              <div class="row g-3">
+                <div class="col-12">
+                  <h3 class="h6 text-white fw-bold">Sobre mí</h3>
+                  <p
+                    class="text-secondary mb-0 profile-bio"
+                    id="profile-bio-display"
+                  >
+                    Aún no agregas una descripción.
+                  </p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <h3 class="h6 text-white fw-bold mb-1">Teléfono</h3>
+                  <p class="text-secondary mb-0" id="profile-phone-display">
+                    No configurado
+                  </p>
+                </div>
+                <div class="col-12 col-md-6">
+                  <h3 class="h6 text-white fw-bold mb-1">
+                    Correo de contacto
+                  </h3>
+                  <p
+                    class="text-secondary mb-0"
+                    id="profile-contact-email-display"
+                  >
+                    No configurado
+                  </p>
+                </div>
+                <div class="col-12">
+                  <h3 class="h6 text-white fw-bold mb-2">Redes sociales</h3>
+                  <div
+                    class="d-flex flex-wrap gap-2 profile-socials"
+                    id="profile-social-links"
+                  ></div>
+                  <p
+                    class="text-secondary small mb-0"
+                    id="profile-socials-empty"
+                  >
+                    Aún no has agregado redes sociales.
+                  </p>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
 
-          <!-- Herramientas y Habilidades -->
-          <div class="card-housky-profile p-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="text-white fw-bold mb-0" style="font-size: 0.95rem">
-                Herramientas y habilidades
-              </h5>
-              <span class="text-secondary small">Diseño + Desarrollo</span>
-            </div>
-            <div class="d-flex flex-wrap gap-2">
-              <span
-                class="badge bg-dark border border-secondary text-white px-3 py-2"
-                >Java / Spring Boot</span
+          <aside class="col-12 col-xl-4">
+            <section
+              class="card-housky mb-4"
+              aria-labelledby="productivity-heading"
+            >
+              <h2 class="h5 fw-bold text-white mb-3" id="productivity-heading">
+                Productividad
+              </h2>
+              <div class="row g-3">
+                <div class="col-6">
+                  <article class="profile-metric">
+                    <span class="text-secondary small">Total</span>
+                    <strong class="profile-metric-value" id="stat-total-tasks"
+                      >—</strong
+                    >
+                    <span class="text-secondary small">tareas</span>
+                  </article>
+                </div>
+                <div class="col-6">
+                  <article class="profile-metric">
+                    <span class="text-secondary small">Completadas</span>
+                    <strong
+                      class="profile-metric-value"
+                      id="stat-completed-tasks"
+                      >—</strong
+                    >
+                    <span class="text-secondary small">tareas</span>
+                  </article>
+                </div>
+                <div class="col-6">
+                  <article class="profile-metric">
+                    <span class="text-secondary small">Pendientes</span>
+                    <strong
+                      class="profile-metric-value"
+                      id="stat-pending-tasks"
+                      >—</strong
+                    >
+                    <span class="text-secondary small">tareas</span>
+                  </article>
+                </div>
+                <div class="col-6">
+                  <article class="profile-metric">
+                    <span class="text-secondary small">Avance</span>
+                    <strong
+                      class="profile-metric-value"
+                      id="stat-completion-rate"
+                      >—</strong
+                    >
+                    <span class="text-secondary small">completado</span>
+                  </article>
+                </div>
+              </div>
+              <p
+                class="text-danger small mt-3 mb-0"
+                id="profile-tasks-error"
+                role="alert"
+                hidden
+              ></p>
+            </section>
+
+            <section class="card-housky">
+              <h2 class="h5 fw-bold text-white mb-2">Cuenta</h2>
+              <p class="text-secondary small">
+                Cierra tu sesión de forma segura en este dispositivo.
+              </p>
+              <button
+                type="button"
+                class="btn btn-outline-secondary w-100 btn-logout"
               >
-              <span
-                class="badge bg-dark border border-secondary text-white px-3 py-2"
-                >JavaScript (ES6)</span
-              >
-              <span
-                class="badge bg-dark border border-secondary text-white px-3 py-2"
-                >Python</span
-              >
-              <span
-                class="badge bg-dark border border-secondary text-white px-3 py-2"
-                >React</span
-              >
-              <span
-                class="badge bg-dark border border-secondary text-white px-3 py-2"
-                >Git & GitHub</span
-              >
-              <span
-                class="badge bg-dark border border-secondary text-white px-3 py-2"
-                >Docker</span
-              >
-              <span
-                class="badge bg-dark border border-secondary text-white px-3 py-2"
-                >Bases de Datos</span
-              >
-              <span
-                class="badge bg-dark border border-secondary text-white px-3 py-2"
-                >Arquitectura Hexagonal</span
-              >
-            </div>
-          </div>
+                <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+              </button>
+            </section>
+          </aside>
         </div>
-      </div>
+      </section>
     </main>
 
-    <!-- editar perfil modal-->
-    <div class="modal fade" id="editProfileModal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-dark border border-secondary text-white">
-          <div class="modal-header border-bottom border-secondary">
-            <h5 class="modal-title fw-bold">Editar Información de Perfil</h5>
+    <div
+      class="modal fade"
+      id="editProfileModal"
+      tabindex="-1"
+      aria-labelledby="edit-profile-title"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content profile-modal">
+          <div class="modal-header">
+            <h2 class="modal-title h5 fw-bold" id="edit-profile-title">
+              Editar perfil
+            </h2>
             <button
               type="button"
               class="btn-close btn-close-white"
               data-bs-dismiss="modal"
+              aria-label="Cerrar"
             ></button>
           </div>
           <div class="modal-body">
             <form id="edit-profile-form">
-              <div class="mb-3">
-                <label class="form-label text-secondary small"
-                  >Nombre completo</label
+              <div class="profile-form-section">
+                <h3 class="h6 fw-bold text-white">Foto de perfil</h3>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <span class="user-avatar profile-avatar-preview" id="avatar-preview">
+                    <span class="user-initials-display">--</span>
+                    <img class="user-avatar-image" alt="Vista previa de la foto" hidden />
+                  </span>
+                  <div class="flex-grow-1">
+                    <label class="form-label text-secondary" for="input-avatar-file"
+                      >Subir imagen</label
+                    >
+                    <input
+                      class="form-control form-control-housky"
+                      type="file"
+                      id="input-avatar-file"
+                      accept="image/*"
+                    />
+                  </div>
+                </div>
+                <label class="form-label text-secondary" for="input-avatar-url"
+                  >O pega una URL de imagen</label
                 >
                 <input
-                  type="text"
-                  id="input-name"
-                  class="form-control bg-dark text-white border-secondary"
-                  value="Alexis Rodríguez"
+                  class="form-control form-control-housky"
+                  type="url"
+                  id="input-avatar-url"
+                  placeholder="https://ejemplo.com/mi-foto.jpg"
                 />
+                <input type="hidden" id="input-avatar-value" />
               </div>
-              <div class="mb-3">
-                <label class="form-label text-secondary small"
-                  >Correo electrónico</label
-                >
-                <input
-                  type="email"
-                  id="input-email"
-                  class="form-control bg-dark text-white border-secondary"
-                  value="alecraftyt291@gmail.com"
-                />
+
+              <div class="profile-form-section">
+                <h3 class="h6 fw-bold text-white">Información personal</h3>
+                <div class="row g-3">
+                  <div class="col-12 col-md-6">
+                    <label class="form-label text-secondary" for="input-name"
+                      >Nombre completo</label
+                    >
+                    <input
+                      class="form-control form-control-housky"
+                      type="text"
+                      id="input-name"
+                      autocomplete="name"
+                      required
+                    />
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label class="form-label text-secondary" for="input-email"
+                      >Correo electrónico</label
+                    >
+                    <input
+                      class="form-control form-control-housky"
+                      type="email"
+                      id="input-email"
+                      autocomplete="email"
+                      required
+                    />
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label class="form-label text-secondary" for="input-phone"
+                      >Teléfono</label
+                    >
+                    <input
+                      class="form-control form-control-housky"
+                      type="tel"
+                      id="input-phone"
+                      autocomplete="tel"
+                    />
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label
+                      class="form-label text-secondary"
+                      for="input-contact-email"
+                      >Correo de contacto</label
+                    >
+                    <input
+                      class="form-control form-control-housky"
+                      type="email"
+                      id="input-contact-email"
+                      autocomplete="email"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label text-secondary" for="input-bio"
+                      >Descripción / biografía</label
+                    >
+                    <textarea
+                      class="form-control form-control-housky"
+                      id="input-bio"
+                      rows="4"
+                    ></textarea>
+                  </div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label class="form-label text-secondary small"
-                  >Número de contacto</label
-                >
-                <input
-                  type="text"
-                  id="input-phone"
-                  class="form-control bg-dark text-white border-secondary"
-                  value="+57 3053888999"
-                />
+
+              <div class="profile-form-section">
+                <h3 class="h6 fw-bold text-white">Redes sociales</h3>
+                <div class="row g-3">
+                  <div class="col-12 col-md-6">
+                    <label class="form-label text-secondary" for="input-github"
+                      >GitHub</label
+                    >
+                    <input
+                      class="form-control form-control-housky"
+                      type="url"
+                      id="input-github"
+                      placeholder="https://github.com/usuario"
+                    />
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label
+                      class="form-label text-secondary"
+                      for="input-linkedin"
+                      >LinkedIn</label
+                    >
+                    <input
+                      class="form-control form-control-housky"
+                      type="url"
+                      id="input-linkedin"
+                      placeholder="https://linkedin.com/in/usuario"
+                    />
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label
+                      class="form-label text-secondary"
+                      for="input-instagram"
+                      >Instagram</label
+                    >
+                    <input
+                      class="form-control form-control-housky"
+                      type="url"
+                      id="input-instagram"
+                      placeholder="https://instagram.com/usuario"
+                    />
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label class="form-label text-secondary" for="input-twitter"
+                      >X / Twitter</label
+                    >
+                    <input
+                      class="form-control form-control-housky"
+                      type="url"
+                      id="input-twitter"
+                      placeholder="https://x.com/usuario"
+                    />
+                  </div>
+                </div>
               </div>
-              <div class="mb-3">
-                <label class="form-label text-secondary small"
-                  >Biografía ("Un poco sobre mí")</label
-                >
-                <textarea
-                  id="input-bio"
-                  class="form-control bg-dark text-white border-secondary"
-                  rows="4"
-                >
-                  Desarrollador de software con un enfoque en desarrollo web, bases de datos y APIs. Cuento con conocimientos en tecnologías backend y frontend como Java con Spring Boot, JavaScript, Python y React, además de herramientas de control de versiones y despliegue como Git y Docker.</textarea
-                >
-              </div>
+
+              <p
+                class="text-danger small mb-3"
+                id="profile-form-error"
+                role="alert"
+                hidden
+              ></p>
               <button type="submit" class="btn btn-primary-housky w-100">
-                Guardar cambios
+                <i class="bi bi-check2 me-1"></i> Guardar cambios
               </button>
             </form>
           </div>
@@ -520,5 +467,6 @@
     ></script>
     <script type="module" src="./js/shared/currentDate.js"></script>
     <script type="module" src="./js/shared/mobileNavigation.js"></script>
+    <script type="module" src="./js/adapters/inbound/dom/sessionGuard.js"></script>
   </body>
 </html>
