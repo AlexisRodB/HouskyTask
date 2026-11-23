@@ -1,4 +1,6 @@
-const API_AUTH = 'http://localhost:8080/api/v1/auth';
+import { API_BASE_URL } from "../../../shared/constants.js";
+
+const API_AUTH = `${API_BASE_URL}/auth`;
 
 function saveAuthenticatedUser(data) {
   if (typeof data?.token !== 'string' || !data.token.trim()) {
