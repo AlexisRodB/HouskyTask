@@ -98,18 +98,60 @@
           </div>
           <div class="auth-field">
             <label for="reg-email">Correo electrónico</label>
-            <div class="auth-input-wrap">
-              <i class="bi bi-envelope" aria-hidden="true"></i>
-              <input
-                type="email"
-                id="reg-email"
-                name="email"
-                placeholder="nombre@ejemplo.com"
-                autocomplete="email"
-                required
-              />
+            <div class="auth-otp-email-row">
+              <div class="auth-input-wrap">
+                <i class="bi bi-envelope" aria-hidden="true"></i>
+                <input
+                  type="email"
+                  id="reg-email"
+                  name="email"
+                  placeholder="nombre@ejemplo.com"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+              <button class="auth-otp-send" id="btnSendOtp" type="button">
+                <i class="bi bi-send" aria-hidden="true"></i>
+                <span id="sendOtpLabel">Enviar código</span>
+              </button>
             </div>
           </div>
+          <section
+            class="auth-otp-card"
+            id="otp-card"
+            aria-labelledby="otp-title"
+            hidden
+          >
+            <div class="auth-otp-card-header">
+              <span class="auth-otp-icon">
+                <i class="bi bi-shield-lock" aria-hidden="true"></i>
+              </span>
+              <div>
+                <label id="otp-title" for="regOtp">Código de verificación</label>
+                <p>Confirma que este correo es tuyo.</p>
+              </div>
+            </div>
+            <input
+              class="auth-otp-input"
+              type="text"
+              id="regOtp"
+              name="otpCode"
+              inputmode="numeric"
+              maxlength="6"
+              pattern="[0-9]{6}"
+              placeholder="Código de 6 dígitos"
+              autocomplete="one-time-code"
+              disabled
+              required
+            />
+            <p
+              class="auth-otp-feedback"
+              id="otpFeedback"
+              role="status"
+              aria-live="polite"
+              hidden
+            ></p>
+          </section>
           <div class="auth-field">
             <label for="reg-password">Contraseña</label>
             <div class="auth-input-wrap">
