@@ -30,6 +30,71 @@ body {
   border-color: rgba(255, 107, 0, 0.4);
 }
 
+.user-avatar {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: var(--accent-orange);
+  color: #000;
+  font-weight: 700;
+}
+
+.user-avatar--small {
+  width: 36px;
+  height: 36px;
+  font-size: 0.8rem;
+}
+
+.user-avatar--medium {
+  width: 48px;
+  height: 48px;
+  font-size: 1rem;
+}
+
+.user-avatar-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-avatar-image[hidden] {
+  display: none;
+}
+
+.mobile-header-bar {
+  background-color: var(--bg-surface);
+  border-color: var(--border-color) !important;
+}
+
+.mobile-navigation-drawer {
+  background-color: var(--bg-surface);
+  width: 280px;
+}
+
+.mobile-nav-header,
+.mobile-nav-footer {
+  border-color: var(--border-color) !important;
+}
+
+.mobile-nav-accent {
+  color: var(--accent-orange);
+}
+
+.mobile-nav-section-title {
+  font-size: 0.75rem;
+}
+
+.mobile-nav-link-active {
+  background-color: rgba(255, 107, 0, 0.15);
+  border-left: 3px solid var(--accent-orange);
+}
+
 .btn-primary-housky {
   background-color: var(--accent-orange);
   color: #ffffff;

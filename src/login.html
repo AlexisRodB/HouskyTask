@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HouskyTask - Acceso</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="d-flex align-items-center justify-content-center min-vh-100 p-3">
+
+  <div class="card-housky" style="width: 100%; max-width: 420px;">
+    <div class="text-center mb-4">
+      <i class="bi bi-check2-square fs-1" style="color: var(--accent-orange);"></i>
+      <h3 class="fw-bold text-white mt-2">HouskyTask</h3>
+      <p class="text-secondary small">Tu espacio personal de productividad</p>
+    </div>
+
+    <!-- Selector Login / Registro -->
+    <ul class="nav nav-pills nav-fill mb-4 p-1 rounded" style="background-color: #0b0f19;">
+      <li class="nav-item">
+        <button class="nav-link active text-white" id="tab-login" type="button">Iniciar sesión</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link text-secondary" id="tab-register" type="button">Crear cuenta</button>
+      </li>
+    </ul>
+
+    <!-- Formulario Login -->
+    <form id="login-form">
+      <div class="mb-3">
+        <label class="form-label text-white small fw-semibold">Correo electrónico</label>
+        <input type="email" id="login-email" class="form-control form-control-housky" placeholder="alexis@ejemplo.com" required>
+      </div>
+      <div class="mb-4">
+        <label class="form-label text-white small fw-semibold">Contraseña</label>
+        <input type="password" id="login-password" class="form-control form-control-housky" placeholder="••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary-housky w-100">Entrar a mi espacio</button>
+    </form>
+
+    <!-- Formulario Registro -->
+    <form id="register-form" class="d-none">
+      <div class="mb-3">
+        <label class="form-label text-white small fw-semibold">Nombre completo</label>
+        <input type="text" id="reg-name" class="form-control form-control-housky" placeholder="Ej. Alexis Rodríguez" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label text-white small fw-semibold">Correo electrónico</label>
+        <input type="email" id="reg-email" class="form-control form-control-housky" placeholder="alexis@ejemplo.com" required>
+      </div>
+      <div class="mb-4">
+        <label class="form-label text-white small fw-semibold">Contraseña</label>
+        <input type="password" id="reg-password" class="form-control form-control-housky" placeholder="Mínimo 4 caracteres" required>
+      </div>
+      <button type="submit" class="btn btn-primary-housky w-100">Registrarme y entrar</button>
+    </form>
+  </div>
+
+  <script type="module" src="./js/adapters/inbound/dom/authController.js"></script>
+</body>
+</html>

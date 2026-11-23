@@ -1,10 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 
 :root {
-  /* --- TIPOGRAFÍA --- */
   --font-main: "Plus Jakarta Sans", sans-serif;
 
-  /* --- PALETA DE COLORES (MODO OSCURO ATREVIDO) --- */
+  /* --- PALETA DE COLORES  --- */
   --bg-main: #070913; /* Fondo principal de la página (Oscuro profundo) */
   --bg-surface: #101626; /* Color de tarjetas, sidebars y contenedores */
   --bg-surface-hover: #1a2338; /* Estado hover para elementos interactivos */

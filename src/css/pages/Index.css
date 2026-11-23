@@ -9,3 +9,15 @@
     display: none !important;
   }
 }
+
+.profile-card-label {
+  font-size: 0.7rem;
+}
+
+.profile-card-footer {
+  border-color: var(--border-color) !important;
+}
+
+.profile-card-link {
+  color: var(--accent-orange);
+}

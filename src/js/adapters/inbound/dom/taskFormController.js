@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const createTask = new CreateTask(taskRepo);
   const form = document.getElementById("task-form");
 
-  // Elementos de la vista previa en vivo
+  // Elementos de la vista previa
   const titleInput = document.getElementById("task-title");
   const descInput = document.getElementById("task-description");
   const dateInput = document.getElementById("task-duedate");
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Manejo de botones de prioridad (Pills)
+  // Manejo de botones de prioridad
   priorityBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       priorityBtns.forEach((b) => b.classList.remove("active"));

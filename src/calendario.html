@@ -92,20 +92,16 @@
         style="border-color: var(--border-color) !important"
       >
         <div class="d-flex align-items-center justify-content-between">
-          <div class="d-flex align-items-center gap-2">
-            <div
-              class="rounded-circle bg-warning text-dark fw-bold d-flex align-items-center justify-content-center"
-              style="width: 32px; height: 32px; font-size: 0.8rem"
-            >
-              AL
-            </div>
-            <div>
-              <div class="text-white fw-bold small">Alexis Rodríguez B.</div>
-              <div class="text-secondary" style="font-size: 0.65rem">
-                Mi espacio personal
-              </div>
-            </div>
-          </div>
+          <a href="perfil.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+            <span class="user-avatar user-avatar--small">
+              <span class="user-initials-display">--</span>
+              <img class="user-avatar-image" alt="Foto de perfil" hidden />
+            </span>
+            <span class="small fw-semibold user-fullname-display">Cargando...</span>
+          </a>
+          <button type="button" class="btn btn-sm btn-outline-secondary btn-logout" title="Cerrar sesión">
+            <i class="bi bi-box-arrow-right"></i>
+          </button>
         </div>
       </div>
     </nav>
@@ -311,5 +307,6 @@
     ></script>
     <script type="module" src="./js/shared/currentDate.js"></script>
     <script type="module" src="./js/shared/mobileNavigation.js"></script>
+    <script type="module" src="./js/adapters/inbound/dom/sessionGuard.js"></script>
   </body>
 </html>

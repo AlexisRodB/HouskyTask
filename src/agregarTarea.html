@@ -124,30 +124,24 @@
         </div>
 
         <div class="pt-3 border-top border-custom">
-          <div class="d-flex align-items-center">
-            <div
-              class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2"
-              style="
-                width: 36px;
-                height: 36px;
-                background: linear-gradient(
-                  135deg,
-                  var(--accent-orange),
-                  var(--accent-green)
-                );
-                font-size: 0.8rem;
-              "
+          <div class="d-flex align-items-center justify-content-between">
+            <a
+              href="perfil.html"
+              class="d-flex align-items-center text-decoration-none text-white gap-2"
             >
-              AR
-            </div>
-            <div class="overflow-hidden">
-              <h6 class="mb-0 text-white" style="font-size: 0.9rem">
-                Alexis Rodríguez B.
-              </h6>
-              <small class="text-secondary-custom" style="font-size: 0.75rem"
-                >Mi espacio personal</small
-              >
-            </div>
+              <span class="user-avatar user-avatar--small">
+                <span class="user-initials-display">--</span>
+                <img class="user-avatar-image" alt="Foto de perfil" hidden />
+              </span>
+              <span class="small fw-semibold user-fullname-display">Cargando...</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary btn-logout"
+              title="Cerrar sesión"
+            >
+              <i class="bi bi-box-arrow-right"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -232,30 +226,24 @@
       </ul>
 
       <div class="mt-auto pt-3 border-top border-custom">
-        <div class="d-flex align-items-center">
-          <div
-            class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-2"
-            style="
-              width: 36px;
-              height: 36px;
-              background: linear-gradient(
-                135deg,
-                var(--accent-orange),
-                var(--accent-green)
-              );
-              font-size: 0.8rem;
-            "
+        <div class="d-flex align-items-center justify-content-between">
+          <a
+            href="perfil.html"
+            class="d-flex align-items-center text-decoration-none text-white gap-2 overflow-hidden"
           >
-            AR
-          </div>
-          <div class="overflow-hidden">
-            <h6 class="mb-0 text-white" style="font-size: 0.9rem">
-              Alexis Rodríguez B.
-            </h6>
-            <small class="text-secondary-custom" style="font-size: 0.75rem"
-              >Mi espacio personal</small
-            >
-          </div>
+            <span class="user-avatar user-avatar--small">
+              <span class="user-initials-display">--</span>
+              <img class="user-avatar-image" alt="Foto de perfil" hidden />
+            </span>
+            <span class="small fw-semibold user-fullname-display text-truncate">Cargando...</span>
+          </a>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary btn-logout"
+            title="Cerrar sesión"
+          >
+            <i class="bi bi-box-arrow-right"></i>
+          </button>
         </div>
       </div>
     </nav>
@@ -624,5 +612,6 @@
       src="./js/adapters/inbound/dom/taskFormController.js"
     ></script>
     <script type="module" src="./js/shared/currentDate.js"></script>
+    <script type="module" src="./js/adapters/inbound/dom/sessionGuard.js"></script>
   </body>
 </html>

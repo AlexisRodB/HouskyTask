@@ -12,8 +12,6 @@ function createMobileNavigation() {
   const header = document.createElement("header");
   header.className =
     "mobile-header-bar d-flex d-lg-none justify-content-between align-items-center p-3 border-bottom";
-  header.style.cssText =
-    "background-color: var(--bg-surface); border-color: var(--border-color) !important;";
 
   const brandGroup = document.createElement("div");
   brandGroup.className = "d-flex align-items-center gap-2";
@@ -26,7 +24,7 @@ function createMobileNavigation() {
   toggleButton.setAttribute("aria-controls", "mobileNavigationDrawer");
   toggleButton.setAttribute("aria-label", "Abrir menú de navegación");
   toggleButton.innerHTML =
-    '<i class="bi bi-list fs-3" style="color: var(--accent-orange)"></i>';
+    '<i class="bi bi-list fs-3 mobile-nav-accent"></i>';
 
   const brand = document.createElement("a");
   brand.className = "fs-5 fw-bold text-white text-decoration-none";
@@ -37,21 +35,19 @@ function createMobileNavigation() {
   header.append(brandGroup);
 
   const drawer = document.createElement("div");
-  drawer.className = "offcanvas offcanvas-start text-white";
+  drawer.className =
+    "offcanvas offcanvas-start text-white mobile-navigation-drawer";
   drawer.id = "mobileNavigationDrawer";
   drawer.tabIndex = -1;
   drawer.setAttribute("aria-labelledby", "mobileNavigationTitle");
-  drawer.style.cssText =
-    "width: 280px; background-color: var(--bg-surface);";
 
   const drawerHeader = document.createElement("div");
-  drawerHeader.className = "offcanvas-header border-bottom";
-  drawerHeader.style.borderColor = "var(--border-color)";
+  drawerHeader.className = "offcanvas-header border-bottom mobile-nav-header";
   const title = document.createElement("h5");
   title.className = "offcanvas-title d-flex align-items-center";
   title.id = "mobileNavigationTitle";
   title.innerHTML =
-    '<i class="bi bi-check2-square fs-4 me-2" style="color: var(--accent-orange)"></i> HouskyTask';
+    '<i class="bi bi-check2-square fs-4 me-2 mobile-nav-accent"></i> HouskyTask';
 
   const closeButton = document.createElement("button");
   closeButton.type = "button";
@@ -67,8 +63,7 @@ function createMobileNavigation() {
   nav.setAttribute("aria-label", "Navegación principal");
   const sectionTitle = document.createElement("div");
   sectionTitle.className =
-    "text-secondary small mb-2 text-uppercase fw-bold";
-  sectionTitle.style.fontSize = "0.75rem";
+    "text-secondary small mb-2 text-uppercase fw-bold mobile-nav-section-title";
   sectionTitle.textContent = "Espacio personal";
   const list = document.createElement("ul");
   list.className = "nav nav-pills flex-column gap-1";
@@ -81,9 +76,7 @@ function createMobileNavigation() {
     link.innerHTML = `<i class="bi ${item.icon} me-2"></i> ${item.label}`;
 
     if (item.href === activePage) {
-      link.className = "nav-link active text-white";
-      link.style.cssText =
-        "background-color: rgba(255, 107, 0, 0.15); border-left: 3px solid var(--accent-orange);";
+      link.className = "nav-link active text-white mobile-nav-link-active";
       link.setAttribute("aria-current", "page");
     }
 
@@ -94,16 +87,19 @@ function createMobileNavigation() {
   nav.append(sectionTitle, list);
 
   const footer = document.createElement("div");
-  footer.className = "pt-3 border-top";
-  footer.style.borderColor = "var(--border-color)";
+  footer.className = "pt-3 border-top mobile-nav-footer";
   footer.innerHTML = `
-    <div class="d-flex align-items-center gap-2">
-      <span class="rounded-circle d-flex align-items-center justify-content-center fw-bold text-white"
-        style="width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-orange), var(--accent-green));">AR</span>
-      <div>
-        <div class="text-white fw-bold small">Alexis Rodríguez B.</div>
-        <div class="text-secondary" style="font-size: 0.75rem">Mi espacio personal</div>
-      </div>
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="perfil.html" class="d-flex align-items-center text-decoration-none text-white gap-2">
+        <span class="user-avatar user-avatar--small">
+          <span class="user-initials-display">--</span>
+          <img class="user-avatar-image" alt="Foto de perfil" hidden>
+        </span>
+        <span class="small fw-semibold user-fullname-display">Cargando...</span>
+      </a>
+      <button type="button" class="btn btn-sm btn-outline-secondary btn-logout" title="Cerrar sesión">
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
     </div>`;
 
   drawerBody.append(nav, footer);

@@ -94,6 +94,18 @@
         <a href="agregarTarea.html" class="btn btn-primary-housky w-100 btn-sm">
           <i class="bi bi-plus-lg me-1"></i> Nueva tarea
         </a>
+        <div class="d-flex align-items-center justify-content-between mt-3">
+          <a href="perfil.html" class="d-flex align-items-center text-decoration-none text-white gap-2 overflow-hidden">
+            <span class="user-avatar user-avatar--small">
+              <span class="user-initials-display">--</span>
+              <img class="user-avatar-image" alt="Foto de perfil" hidden />
+            </span>
+            <span class="small fw-semibold user-fullname-display text-truncate">Cargando...</span>
+          </a>
+          <button type="button" class="btn btn-sm btn-outline-secondary btn-logout" title="Cerrar sesión">
+            <i class="bi bi-box-arrow-right"></i>
+          </button>
+        </div>
       </div>
     </nav>
 
@@ -278,5 +290,6 @@
       src="./js/adapters/inbound/dom/whiteboardController.js"
     ></script>
     <script type="module" src="./js/shared/mobileNavigation.js"></script>
+    <script type="module" src="./js/adapters/inbound/dom/sessionGuard.js"></script>
   </body>
 </html>
