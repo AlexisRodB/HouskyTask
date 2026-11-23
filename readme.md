@@ -5,6 +5,7 @@ Planificador de tareas para organizar pendientes, fechas y prioridades desde una
 ## Enlaces del proyecto
 
 - **Repositorio:** [AlexisRodB/HouskyTask](https://github.com/AlexisRodB/HouskyTask)
+- **Repositorio BackEnd:** [AlexisRodB/houskytask-api] (https://github.com/AlexisRodB/houskytask-api)
 - **Tablero de Trello:** [https://trello.com/invite/b/6ae267d83a329b6207002523/ATTI09a1fd731ba96a2dde37db50a175d60b50A0188A/houskytask](https://trello.com/invite/b/6ae267d83a329b6207002523/ATTI09a1fd731ba96a2dde37db50a175d60b50A0188A/houskytask)
 - **Wireframe en Figma:** [https://www.figma.com/design/fXuvvwbhg5YMWyWFaprpjF/HouskytTask?node-id=0-1&t=jYTo6plc5a8Ed3wu-1](https://www.figma.com/design/fXuvvwbhg5YMWyWFaprpjF/HouskytTask?node-id=0-1&t=jYTo6plc5a8Ed3wu-1)
 - **Demo en Vercel:** [https://houskytask-src.vercel.app](https://houskytask-src.vercel.app)
