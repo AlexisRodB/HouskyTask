@@ -1,5 +1,6 @@
 import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
 import { authFetch } from "../../outbound/storage/authFetch.js";
+import { API_BASE_URL } from "../../../shared/constants.js";
 
 const SESSION_KEY = "houskytask_user";
 const SOCIAL_LINKS = [
@@ -298,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await authFetch(
-        `http://localhost:8080/api/v1/users/${user.id}`,
+        `${API_BASE_URL}/users/${user.id}`,
         {
           method: "PUT",
           body: JSON.stringify(profilePayload),

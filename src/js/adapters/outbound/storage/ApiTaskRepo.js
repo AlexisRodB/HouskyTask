@@ -1,9 +1,10 @@
 // src/js/adapters/outbound/storage/ApiTaskRepo.js
 import { authFetch } from "./authFetch.js";
+import { API_BASE_URL } from "../../../shared/constants.js";
 
 export class ApiTaskRepo {
   constructor() {
-    this.baseUrl = 'http://localhost:8080/api/v1/tasks';
+    this.baseUrl = `${API_BASE_URL}/tasks`;
   }
 
   getCurrentUser() {
