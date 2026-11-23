@@ -25,7 +25,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const sendOtpButton = document.getElementById('btnSendOtp');
   const sendOtpLabel = document.getElementById('sendOtpLabel');
   const otpFeedback = document.getElementById('otpFeedback');
+  const passwordToggles = document.querySelectorAll('[data-password-toggle]');
   let otpCountdown;
+
+  passwordToggles.forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      const password = document.getElementById(toggle.getAttribute('aria-controls'));
+      const isVisible = password.type === 'text';
+
+      password.type = isVisible ? 'password' : 'text';
+      toggle.setAttribute('aria-pressed', String(!isVisible));
+      toggle.setAttribute(
+        'aria-label',
+        isVisible ? 'Mostrar contraseña' : 'Ocultar contraseña'
+      );
+      toggle.querySelector('i').classList.toggle('bi-eye', isVisible);
+      toggle.querySelector('i').classList.toggle('bi-eye-slash', !isVisible);
+    });
+  });
 
   const showOtpFeedback = (message, type) => {
     otpFeedback.textContent = message;

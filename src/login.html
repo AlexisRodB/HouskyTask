@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="./css/pages/LoginRegistro.css" />
   </head>
   <body class="auth-page">
-    <main class="auth-card" id="auth-card">
+    <main class="auth-card auth-card--option-2" id="auth-card">
       <section class="form-container sign-in" aria-labelledby="login-title">
         <form id="login-form" class="auth-form">
           <div class="auth-brand">
@@ -51,11 +51,22 @@
               <input
                 type="password"
                 id="login-password"
+                class="auth-password-input"
                 name="password"
                 placeholder="Tu contraseña"
                 autocomplete="current-password"
                 required
               />
+              <button
+                class="auth-password-toggle"
+                type="button"
+                data-password-toggle
+                aria-controls="login-password"
+                aria-label="Mostrar contraseña"
+                aria-pressed="false"
+              >
+                <i class="bi bi-eye" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
           <button type="submit" class="btn btn-primary-housky auth-submit">
@@ -159,12 +170,23 @@
               <input
                 type="password"
                 id="reg-password"
+                class="auth-password-input"
                 name="password"
                 placeholder="Mínimo 8 caracteres"
                 autocomplete="new-password"
                 minlength="8"
                 required
               />
+              <button
+                class="auth-password-toggle"
+                type="button"
+                data-password-toggle
+                aria-controls="reg-password"
+                aria-label="Mostrar contraseña"
+                aria-pressed="false"
+              >
+                <i class="bi bi-eye" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
           <button type="submit" class="btn btn-primary-housky auth-submit">
