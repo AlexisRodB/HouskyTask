@@ -27,7 +27,12 @@ function renderSessionUser() {
     return;
   }
 
-  if (!user || typeof user !== "object") {
+  if (
+    !user ||
+    typeof user !== "object" ||
+    typeof user.token !== "string" ||
+    !user.token.trim()
+  ) {
     localStorage.removeItem(SESSION_KEY);
     window.location.href = "login.html";
     return;

@@ -1,4 +1,5 @@
 import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
+import { authFetch } from "../../outbound/storage/authFetch.js";
 
 const SESSION_KEY = "houskytask_user";
 const SOCIAL_LINKS = [
@@ -296,11 +297,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const response = await fetch(
+      const response = await authFetch(
         `http://localhost:8080/api/v1/users/${user.id}`,
         {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(profilePayload),
         },
       );
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const savedUser = await response.json();
-      const updatedUser = { ...user, ...savedUser };
+      const updatedUser = { ...user, ...savedUser, token: user.token };
       localStorage.setItem(SESSION_KEY, JSON.stringify(updatedUser));
 
       Object.assign(user, updatedUser);

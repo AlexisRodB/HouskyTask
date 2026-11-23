@@ -1,64 +1,174 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HouskyTask - Acceso</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="./css/variables.css">
-  <link rel="stylesheet" href="./css/styles.css">
-</head>
-<body class="d-flex align-items-center justify-content-center min-vh-100 p-3">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070913" />
+    <title>HouskyTask - Acceso</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/houskytask-icon.svg" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/pages/LoginRegistro.css" />
+  </head>
+  <body class="auth-page">
+    <main class="auth-card" id="auth-card">
+      <section class="form-container sign-in" aria-labelledby="login-title">
+        <form id="login-form" class="auth-form">
+          <div class="auth-brand">
+            <i class="bi bi-check2-square" aria-hidden="true"></i>
+            <span>HouskyTask</span>
+          </div>
+          <p class="auth-eyebrow">TU ESPACIO PERSONAL</p>
+          <h1 id="login-title">Qué bueno verte</h1>
+          <p class="auth-description">Inicia sesión y continúa con tus tareas.</p>
 
-  <div class="card-housky" style="width: 100%; max-width: 420px;">
-    <div class="text-center mb-4">
-      <i class="bi bi-check2-square fs-1" style="color: var(--accent-orange);"></i>
-      <h3 class="fw-bold text-white mt-2">HouskyTask</h3>
-      <p class="text-secondary small">Tu espacio personal de productividad</p>
-    </div>
+          <div class="auth-field">
+            <label for="login-email">Correo electrónico</label>
+            <div class="auth-input-wrap">
+              <i class="bi bi-envelope" aria-hidden="true"></i>
+              <input
+                type="email"
+                id="login-email"
+                name="email"
+                placeholder="nombre@ejemplo.com"
+                autocomplete="email"
+                required
+              />
+            </div>
+          </div>
+          <div class="auth-field">
+            <label for="login-password">Contraseña</label>
+            <div class="auth-input-wrap">
+              <i class="bi bi-lock" aria-hidden="true"></i>
+              <input
+                type="password"
+                id="login-password"
+                name="password"
+                placeholder="Tu contraseña"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary-housky auth-submit">
+            Iniciar sesión <i class="bi bi-arrow-right" aria-hidden="true"></i>
+          </button>
+          <p class="auth-note">
+            <i class="bi bi-shield-check" aria-hidden="true"></i>
+            Tus tareas y tu espacio, siempre a tu alcance.
+          </p>
+        </form>
+      </section>
 
-    <!-- Selector Login / Registro -->
-    <ul class="nav nav-pills nav-fill mb-4 p-1 rounded" style="background-color: #0b0f19;">
-      <li class="nav-item">
-        <button class="nav-link active text-white" id="tab-login" type="button">Iniciar sesión</button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-link text-secondary" id="tab-register" type="button">Crear cuenta</button>
-      </li>
-    </ul>
+      <section
+        class="form-container sign-up"
+        aria-labelledby="register-title"
+        aria-hidden="true"
+      >
+        <form id="register-form" class="auth-form">
+          <div class="auth-brand">
+            <i class="bi bi-check2-square" aria-hidden="true"></i>
+            <span>HouskyTask</span>
+          </div>
+          <p class="auth-eyebrow">EMPIEZA A ORGANIZARTE</p>
+          <h1 id="register-title">Crea tu cuenta</h1>
+          <p class="auth-description">Un espacio hecho para tus ideas y pendientes.</p>
 
-    <!-- Formulario Login -->
-    <form id="login-form">
-      <div class="mb-3">
-        <label class="form-label text-white small fw-semibold">Correo electrónico</label>
-        <input type="email" id="login-email" class="form-control form-control-housky" placeholder="alexis@ejemplo.com" required>
-      </div>
-      <div class="mb-4">
-        <label class="form-label text-white small fw-semibold">Contraseña</label>
-        <input type="password" id="login-password" class="form-control form-control-housky" placeholder="••••••" required>
-      </div>
-      <button type="submit" class="btn btn-primary-housky w-100">Entrar a mi espacio</button>
-    </form>
+          <div class="auth-field">
+            <label for="reg-name">Nombre completo</label>
+            <div class="auth-input-wrap">
+              <i class="bi bi-person" aria-hidden="true"></i>
+              <input
+                type="text"
+                id="reg-name"
+                name="name"
+                placeholder="Ej. María García"
+                autocomplete="name"
+                required
+              />
+            </div>
+          </div>
+          <div class="auth-field">
+            <label for="reg-email">Correo electrónico</label>
+            <div class="auth-input-wrap">
+              <i class="bi bi-envelope" aria-hidden="true"></i>
+              <input
+                type="email"
+                id="reg-email"
+                name="email"
+                placeholder="nombre@ejemplo.com"
+                autocomplete="email"
+                required
+              />
+            </div>
+          </div>
+          <div class="auth-field">
+            <label for="reg-password">Contraseña</label>
+            <div class="auth-input-wrap">
+              <i class="bi bi-lock" aria-hidden="true"></i>
+              <input
+                type="password"
+                id="reg-password"
+                name="password"
+                placeholder="Mínimo 8 caracteres"
+                autocomplete="new-password"
+                minlength="8"
+                required
+              />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary-housky auth-submit">
+            Crear cuenta <i class="bi bi-arrow-right" aria-hidden="true"></i>
+          </button>
+          <p class="auth-note">
+            <i class="bi bi-shield-check" aria-hidden="true"></i>
+            Tu productividad comienza con un primer paso.
+          </p>
+        </form>
+      </section>
 
-    <!-- Formulario Registro -->
-    <form id="register-form" class="d-none">
-      <div class="mb-3">
-        <label class="form-label text-white small fw-semibold">Nombre completo</label>
-        <input type="text" id="reg-name" class="form-control form-control-housky" placeholder="Ej. Alexis Rodríguez" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label text-white small fw-semibold">Correo electrónico</label>
-        <input type="email" id="reg-email" class="form-control form-control-housky" placeholder="alexis@ejemplo.com" required>
-      </div>
-      <div class="mb-4">
-        <label class="form-label text-white small fw-semibold">Contraseña</label>
-        <input type="password" id="reg-password" class="form-control form-control-housky" placeholder="Mínimo 4 caracteres" required>
-      </div>
-      <button type="submit" class="btn btn-primary-housky w-100">Registrarme y entrar</button>
-    </form>
-  </div>
+      <aside class="toggle-container" aria-label="Cambiar entre acceso y registro">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <div class="toggle-mark"><i class="bi bi-check2-square" aria-hidden="true"></i></div>
+            <p class="toggle-eyebrow">TU PRODUCTIVIDAD, EN UN SOLO LUGAR</p>
+            <h2>¡Bienvenido de nuevo!</h2>
+            <p>Entra a tu espacio y sigue avanzando, una tarea a la vez.</p>
+            <button
+              class="auth-switch"
+              id="tab-login"
+              type="button"
+              aria-controls="login-form"
+            >
+              Iniciar sesión
+            </button>
+          </div>
+          <div class="toggle-panel toggle-right">
+            <div class="toggle-mark"><i class="bi bi-check2-square" aria-hidden="true"></i></div>
+            <p class="toggle-eyebrow">MENOS PENDIENTES EN TU CABEZA</p>
+            <h2>¡Hola, qué gusto!</h2>
+            <p>Crea tu cuenta y dale a tus ideas un lugar para crecer.</p>
+            <button
+              class="auth-switch"
+              id="tab-register"
+              type="button"
+              aria-controls="register-form"
+            >
+              Crear cuenta
+            </button>
+          </div>
+        </div>
+      </aside>
+    </main>
 
-  <script type="module" src="./js/adapters/inbound/dom/authController.js"></script>
-</body>
+    <script type="module" src="./js/adapters/inbound/dom/authController.js"></script>
+  </body>
 </html>

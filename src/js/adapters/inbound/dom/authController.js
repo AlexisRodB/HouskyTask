@@ -1,23 +1,37 @@
 const API_AUTH = 'http://localhost:8080/api/v1/auth';
 
+function saveAuthenticatedUser(data) {
+  if (typeof data?.token !== 'string' || !data.token.trim()) {
+    alert('El servidor no devolvió un token de acceso válido.');
+    return false;
+  }
+
+  localStorage.setItem('houskytask_user', JSON.stringify(data));
+  return true;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const tabLogin = document.getElementById('tab-login');
   const tabRegister = document.getElementById('tab-register');
+  const authCard = document.getElementById('auth-card');
   const loginForm = document.getElementById('login-form');
   const registerForm = document.getElementById('register-form');
 
+  const setAuthMode = (mode) => {
+    const isRegistering = mode === 'register';
+    authCard.classList.toggle('active', isRegistering);
+    loginForm.closest('.form-container').setAttribute('aria-hidden', String(isRegistering));
+    registerForm.closest('.form-container').setAttribute('aria-hidden', String(!isRegistering));
+  };
+
   tabLogin.addEventListener('click', () => {
-    tabLogin.classList.add('active', 'text-white');
-    tabRegister.classList.remove('active', 'text-white');
-    loginForm.classList.remove('d-none');
-    registerForm.classList.add('d-none');
+    setAuthMode('login');
+    loginForm.querySelector('input').focus();
   });
 
   tabRegister.addEventListener('click', () => {
-    tabRegister.classList.add('active', 'text-white');
-    tabLogin.classList.remove('active', 'text-white');
-    registerForm.classList.remove('d-none');
-    loginForm.classList.add('d-none');
+    setAuthMode('register');
+    registerForm.querySelector('input').focus();
   });
 
   loginForm.addEventListener('submit', async (e) => {
@@ -31,10 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify({ email, password })
     });
 
-    const user = await res.json();
-    if (!res.ok) return alert(user.message || 'Error al iniciar sesión');
+    const data = await res.json();
+    if (!res.ok) return alert(data.message || 'Error al iniciar sesión');
+    if (!saveAuthenticatedUser(data)) return;
 
-    localStorage.setItem('houskytask_user', JSON.stringify(user));
     window.location.href = 'index.html';
   });
 
@@ -50,10 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify({ fullName, email, password })
     });
 
-    const user = await res.json();
-    if (!res.ok) return alert(user.message || 'Error al registrar usuario');
+    const data = await res.json();
+    if (!res.ok) return alert(data.message || 'Error al registrar usuario');
+    if (!saveAuthenticatedUser(data)) return;
 
-    localStorage.setItem('houskytask_user', JSON.stringify(user));
     window.location.href = 'index.html';
   });
 });
