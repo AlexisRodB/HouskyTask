@@ -1,7 +1,12 @@
+import { hidePageLoader } from "../../../shared/pageLoader.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.getElementById("drawing-canvas");
   const container = document.getElementById("canvas-container");
-  if (!canvas || !container) return;
+  if (!canvas || !container) {
+    hidePageLoader();
+    return;
+  }
 
   // optimizar el rendimiento de las figuras geométricas
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -350,4 +355,6 @@ document.addEventListener("DOMContentLoaded", () => {
     link.href = canvas.toDataURL();
     link.click();
   });
+
+  hidePageLoader();
 });

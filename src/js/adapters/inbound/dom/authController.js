@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "../../../shared/constants.js";
+import { hidePageLoader } from "../../../shared/pageLoader.js";
 
 const API_AUTH = `${API_BASE_URL}/auth`;
 const OTP_COOLDOWN_SECONDS = 60;
@@ -192,4 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showOtpFeedback('No se pudo completar el registro. Inténtalo de nuevo.', 'error');
     }
   });
+
+  hidePageLoader();
 });

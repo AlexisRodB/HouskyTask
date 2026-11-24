@@ -1,5 +1,6 @@
 import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
 import { CreateTask } from "../../../core/use-cases/CreateTask.js";
+import { hidePageLoader } from "../../../shared/pageLoader.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const taskRepo = new ApiTaskRepo();
@@ -133,4 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  hidePageLoader();
 });

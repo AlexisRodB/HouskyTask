@@ -1,4 +1,5 @@
 import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
+import { hidePageLoader } from "../../../shared/pageLoader.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const taskRepo = new ApiTaskRepo();
@@ -150,5 +151,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   } catch (error) {
     console.error("Error al inicializar el controlador de inicio:", error);
+  } finally {
+    hidePageLoader();
   }
 });
