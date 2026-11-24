@@ -1,4 +1,5 @@
 import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
+import { hidePageLoader } from "../../../shared/pageLoader.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const taskRepo = new ApiTaskRepo();
@@ -36,10 +37,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         (t) => `
       <div class="card-housky d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
         <div class="flex-grow-1">
-          <div class="d-flex align-items-center gap-2 mb-1">
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
             <span class="badge bg-secondary text-dark" style="font-size: 0.65rem;">${t.project || "General"}</span>
             <span class="badge-priority-${t.priority}" style="font-size: 0.65rem;">${t.priority.toUpperCase()}</span>
-            <span class="text-secondary small"><i class="bi bi-calendar-event me-1"></i>${t.dueDate || "Sin fecha"}</span>
+            <span class="text-secondary small text-nowrap flex-shrink-0"><i class="bi bi-calendar-event me-1"></i>${t.dueDate || "Sin fecha"}</span>
           </div>
           <h5 class="fw-bold text-white mb-1 ${t.status === "completada" ? "text-decoration-line-through text-muted" : ""}">${t.title}</h5>
           <p class="text-secondary small mb-0">${t.description || "Sin descripción"}</p>
@@ -109,5 +110,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // Carga inicial
-  loadAndRender();
+  try {
+    await loadAndRender();
+  } finally {
+    hidePageLoader();
+  }
 });

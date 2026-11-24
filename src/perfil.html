@@ -18,6 +18,23 @@
     <link rel="stylesheet" href="./css/pages/Perfil.css" />
   </head>
   <body class="d-flex flex-column flex-lg-row">
+    <div
+      class="page-loader"
+      id="page-loader"
+      role="status"
+      aria-live="polite"
+    >
+      <div class="loader-hand" aria-hidden="true">
+        <div class="loader-finger"></div>
+        <div class="loader-finger"></div>
+        <div class="loader-finger"></div>
+        <div class="loader-finger"></div>
+        <div class="loader-palm"></div>
+        <div class="loader-thumb"></div>
+      </div>
+      <span class="visually-hidden">Cargando perfil...</span>
+    </div>
+
     <nav
       class="profile-sidebar d-none d-lg-flex flex-column flex-shrink-0 p-3"
       aria-label="Navegación principal"
@@ -163,20 +180,9 @@
                     Aún no agregas una descripción.
                   </p>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12">
                   <h3 class="h6 text-white fw-bold mb-1">Teléfono</h3>
                   <p class="text-secondary mb-0" id="profile-phone-display">
-                    No configurado
-                  </p>
-                </div>
-                <div class="col-12 col-md-6">
-                  <h3 class="h6 text-white fw-bold mb-1">
-                    Correo de contacto
-                  </h3>
-                  <p
-                    class="text-secondary mb-0"
-                    id="profile-contact-email-display"
-                  >
                     No configurado
                   </p>
                 </div>
@@ -354,7 +360,7 @@
                       required
                     />
                   </div>
-                  <div class="col-12 col-md-6">
+                  <div class="col-12">
                     <label class="form-label text-secondary" for="input-phone"
                       >Teléfono</label
                     >
@@ -363,19 +369,6 @@
                       type="tel"
                       id="input-phone"
                       autocomplete="tel"
-                    />
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <label
-                      class="form-label text-secondary"
-                      for="input-contact-email"
-                      >Correo de contacto</label
-                    >
-                    <input
-                      class="form-control form-control-housky"
-                      type="email"
-                      id="input-contact-email"
-                      autocomplete="email"
                     />
                   </div>
                   <div class="col-12">
@@ -451,7 +444,10 @@
                 role="alert"
                 hidden
               ></p>
-              <button type="submit" class="btn btn-primary-housky w-100">
+              <button
+                type="submit"
+                class="btn btn-primary-housky w-100 profile-submit-button"
+              >
                 <i class="bi bi-check2 me-1"></i> Guardar cambios
               </button>
             </form>

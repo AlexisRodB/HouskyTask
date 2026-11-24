@@ -1,6 +1,7 @@
 import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
 import { authFetch } from "../../outbound/storage/authFetch.js";
 import { API_BASE_URL } from "../../../shared/constants.js";
+import { hidePageLoader } from "../../../shared/pageLoader.js";
 
 const SESSION_KEY = "houskytask_user";
 const SOCIAL_LINKS = [
@@ -122,13 +123,6 @@ function renderUser(user) {
   const phone = document.getElementById("profile-phone-display");
   if (phone) phone.textContent = user.phone?.trim() || "No configurado";
 
-  const contactEmail = document.getElementById(
-    "profile-contact-email-display",
-  );
-  if (contactEmail) {
-    contactEmail.textContent = user.contactEmail?.trim() || "No configurado";
-  }
-
   renderSocialLinks(user);
 }
 
@@ -137,7 +131,6 @@ function populateForm(user, elements) {
   elements.email.value = user.email || "";
   elements.bio.value = user.bio || "";
   elements.phone.value = user.phone || "";
-  elements.contactEmail.value = user.contactEmail || "";
   elements.avatarUrl.value = user.avatarUrl?.startsWith("data:image/")
     ? ""
     : user.avatarUrl || "";
@@ -159,7 +152,7 @@ function populateForm(user, elements) {
 function updateTaskMetrics() {
   const errorMessage = document.getElementById("profile-tasks-error");
 
-  new ApiTaskRepo()
+  return new ApiTaskRepo()
     .findAll()
     .then((tasks) => {
       const completed = tasks.filter(
@@ -188,9 +181,12 @@ function updateTaskMetrics() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const user = readCurrentUser();
-  if (!user) return;
+  if (!user) {
+    hidePageLoader();
+    return;
+  }
 
   const elements = {
     form: document.getElementById("edit-profile-form"),
@@ -198,7 +194,6 @@ document.addEventListener("DOMContentLoaded", () => {
     email: document.getElementById("input-email"),
     bio: document.getElementById("input-bio"),
     phone: document.getElementById("input-phone"),
-    contactEmail: document.getElementById("input-contact-email"),
     avatarFile: document.getElementById("input-avatar-file"),
     avatarUrl: document.getElementById("input-avatar-url"),
     avatarValue: document.getElementById("input-avatar-value"),
@@ -213,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   renderUser(user);
-  updateTaskMetrics();
+  const taskMetricsRequest = updateTaskMetrics();
 
   document
     .getElementById("edit-profile-button")
@@ -285,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
       bio: elements.bio.value.trim(),
       avatarUrl,
       phone: elements.phone.value.trim(),
-      contactEmail: elements.contactEmail.value.trim(),
+      contactEmail: user.contactEmail || "",
       socials: {
         ...user.socials,
         ...Object.fromEntries(
@@ -339,4 +334,10 @@ document.addEventListener("DOMContentLoaded", () => {
       elements.error.hidden = false;
     }
   });
+
+  try {
+    await taskMetricsRequest;
+  } finally {
+    hidePageLoader();
+  }
 });
