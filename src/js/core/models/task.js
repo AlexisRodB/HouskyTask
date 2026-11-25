@@ -8,6 +8,8 @@ export class Task {
     priority = 'media',
     status = 'pendiente',
     project = 'General',
+    reminderEnabled = true,
+    reminderMinutes = 30,
     createdAt = new Date().toISOString()
   }) {
     if (!title || title.trim() === '') {
@@ -22,6 +24,10 @@ export class Task {
     this.priority = priority;
     this.status = status;
     this.project = project.trim();
+    this.reminderEnabled = reminderEnabled;
+    this.reminderMinutes = reminderEnabled && reminderMinutes != null
+      ? Number(reminderMinutes)
+      : null;
     this.createdAt = createdAt;
   }
 
@@ -48,6 +54,8 @@ export class Task {
       priority: this.priority,
       status: this.status,
       project: this.project,
+      reminderEnabled: this.reminderEnabled,
+      reminderMinutes: this.reminderMinutes,
       createdAt: this.createdAt
     };
   }
@@ -67,6 +75,8 @@ export class Task {
       priority: plainObject.priority,
       status: plainObject.status,
       project: plainObject.project,
+      reminderEnabled: plainObject.reminderEnabled ?? true,
+      reminderMinutes: plainObject.reminderMinutes ?? 30,
       createdAt: plainObject.createdAt
     });
   }

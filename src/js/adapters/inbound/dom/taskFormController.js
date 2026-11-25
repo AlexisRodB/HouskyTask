@@ -18,6 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const priorityGroup = document.getElementById("priority-group");
   const priorityFeedback = document.getElementById("priority-feedback");
   const priorityBtns = document.querySelectorAll(".priority-pill");
+  const reminderSwitch = document.getElementById("reminder-switch");
+  const reminderTime = document.getElementById("reminder-time");
+  const reminderPreviewText = document.getElementById("reminder-preview-text");
 
   const previewTitle = document.getElementById("preview-title");
   const previewDesc = document.getElementById("preview-desc");
@@ -97,6 +100,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function getReminderText(minutes) {
+    const selectedOption = reminderTime?.selectedOptions[0];
+    if (selectedOption) return selectedOption.textContent;
+    if (Number(minutes) === 1440) return "1 día antes";
+    if (Number(minutes) === 60) return "1 hora antes";
+    if (Number(minutes) === 120) return "2 horas antes";
+    return `${minutes} min antes`;
+  }
+
+  function syncReminderControls() {
+    if (!reminderSwitch || !reminderTime || !reminderPreviewText) return;
+
+    reminderTime.disabled = !reminderSwitch.checked;
+    reminderPreviewText.textContent = reminderSwitch.checked
+      ? getReminderText(reminderTime.value)
+      : "Recordatorio desactivado";
+  }
+
+  if (reminderSwitch) {
+    reminderSwitch.addEventListener("change", syncReminderControls);
+  }
+
+  if (reminderTime) {
+    reminderTime.addEventListener("change", syncReminderControls);
+  }
+
+  syncReminderControls();
+
   // Manejo de botones de prioridad
   priorityBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -150,15 +181,39 @@ document.addEventListener("DOMContentLoaded", () => {
         project: projectSelect.value,
         status: statusSelect.value,
         priority: priorityInput.value,
+        reminderEnabled: Boolean(reminderSwitch?.checked),
+        reminderMinutes: reminderSwitch?.checked ? Number(reminderTime.value) : null,
       };
 
       try {
         await createTask.execute(newTask);
-        alert("¡Tarea creada con éxito, mi rey!");
+        await window.Swal.fire({
+          icon: "success",
+          title: "Tarea creada correctamente",
+          text: "La nueva tarea se ha guardado correctamente.",
+          confirmButtonText: "Continuar",
+          buttonsStyling: false,
+          customClass: {
+            popup: "housky-alert-popup",
+            title: "housky-alert-title",
+            confirmButton: "btn btn-primary-housky housky-alert-confirm",
+          },
+        });
         window.location.href = "index.html";
       } catch (error) {
         console.error("Error al guardar la tarea:", error);
-        alert("Hubo un error al guardar la tarea.");
+        await window.Swal.fire({
+          icon: "error",
+          title: "No se pudo guardar la tarea",
+          text: "Ocurrió un inconveniente al guardar la tarea. Inténtelo nuevamente.",
+          confirmButtonText: "Entendido",
+          buttonsStyling: false,
+          customClass: {
+            popup: "housky-alert-popup",
+            title: "housky-alert-title",
+            confirmButton: "btn btn-primary-housky housky-alert-confirm",
+          },
+        });
       }
     });
   }
