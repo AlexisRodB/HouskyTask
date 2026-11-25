@@ -1,11 +1,18 @@
 import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
 import { hidePageLoader } from "../../../shared/pageLoader.js";
+import {
+  getDeadlineMessage,
+  getDaysUntilDueDate,
+  getTasksDueWithinRange,
+} from "../../../shared/taskDates.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const taskRepo = new ApiTaskRepo();
 
   try {
     const tasks = await taskRepo.findAll();
+    const today = new Date();
+    const visibleTasks = getTasksDueWithinRange(tasks, today);
 
     // calcular metricas pendientes, en curso y completadas
     const pendingCount = tasks.filter((t) => t.status === "pendiente").length;
@@ -78,8 +85,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // cargar foco de hoy
     const todayFocusCard = document.getElementById("today-focus-card");
     const todayFocus =
-      tasks.find((t) => t.status === "en-curso" || t.status === "pendiente") ||
-      tasks[0];
+      visibleTasks.find(
+        (t) => t.status === "en-curso" || t.status === "pendiente",
+      ) || visibleTasks[0];
 
     if (todayFocusCard) {
       if (todayFocus) {
@@ -104,8 +112,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         todayFocusCard.innerHTML = `
           <div class="text-center py-4">
             <i class="bi bi-check2-all fs-1 text-success mb-2"></i>
-            <h6 class="text-white fw-bold">¡Todo al día!</h6>
-            <p class="text-secondary small mb-3">No tienes tareas pendientes por ahora.</p>
+            <h6 class="text-white fw-bold">Sin tareas en este rango</h6>
+            <p class="text-secondary small mb-3">Aquí aparecen las tareas vencidas de los últimos 7 días y las entregas de los próximos 7.</p>
             <a href="agregarTarea.html" class="btn btn-primary-housky btn-sm w-100">Crear nueva tarea</a>
           </div>
         `;
@@ -116,38 +124,70 @@ document.addEventListener("DOMContentLoaded", async () => {
     const upcomingContainer = document.getElementById(
       "upcoming-tasks-container",
     );
-    const upcomingTasks = tasks.filter((t) => t.status !== "completada");
+    const upcomingTasks = visibleTasks.filter(
+      (task) => getDaysUntilDueDate(task.dueDate, today) >= 0,
+    );
+    const overdueTasks = visibleTasks
+      .filter(
+        (task) => getDaysUntilDueDate(task.dueDate, today) < 0,
+      )
+      .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
 
     if (upcomingContainer) {
-      if (upcomingTasks.length === 0) {
-        upcomingContainer.innerHTML = `
+      const overdueHTML =
+        overdueTasks.length > 0
+          ? `
+          <div class="mb-2">
+            <h6 class="text-danger fw-bold small mb-2">Entregas vencidas</h6>
+            <div class="d-flex flex-column gap-2">
+              ${overdueTasks
+                .map(
+                  (task) => `
+                <div class="p-2 rounded bg-dark border border-danger d-flex justify-content-between align-items-center gap-2">
+                  <div>
+                    <div class="text-white fw-bold small">${task.title}</div>
+                    <small class="text-danger">${getDeadlineMessage(task.dueDate, today)}</small>
+                  </div>
+                  <span class="badge-priority-${task.priority}" style="font-size: 0.55rem;">${task.priority}</span>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        `
+          : "";
+
+      const upcomingHTML =
+        upcomingTasks.length === 0
+          ? `
           <div class="text-center py-4 px-3 rounded bg-dark border border-secondary bg-opacity-25">
-            <i class="bi bi-check2-circle text-warning fs-2 mb-2"></i>
-            <h6 class="text-white fw-bold mb-1">¡Todo al día por aquí!</h6>
-            <p class="text-secondary small mb-3">No tienes tareas pendientes. Disfruta tu tiempo libre o agrega un nuevo plan cuando estés listo.</p>
+            <i class="bi bi-calendar-check text-secondary fs-2 mb-2"></i>
+            <h6 class="text-white fw-bold mb-1">No hay entregas en los próximos 7 días</h6>
+            <p class="text-secondary small mb-3">Las entregas futuras dentro de este plazo aparecerán aquí.</p>
             <a href="agregarTarea.html" class="btn btn-sm btn-primary-housky">Agregar nueva tarea</a>
           </div>
-        `;
-      } else {
-        upcomingContainer.innerHTML = `
+        `
+          : `
           <div class="d-flex flex-column gap-2">
             ${upcomingTasks
-              .slice(0, 3)
               .map(
-                (t) => `
-              <div class="p-2 rounded bg-dark border border-secondary d-flex justify-content-between align-items-center">
+                (task) => `
+              <div class="p-2 rounded bg-dark border border-secondary d-flex justify-content-between align-items-center gap-2">
                 <div>
-                  <div class="text-white fw-bold small mb-0">${t.title}</div>
-                  <small class="text-secondary" style="font-size: 0.7rem;">${t.dueDate || "Sin fecha límite"} · ${t.project || "General"}</small>
+                  <div class="text-white fw-bold small mb-0">${task.title}</div>
+                  <small class="text-secondary" style="font-size: 0.7rem;">${task.dueDate} · ${task.project || "General"}</small>
+                  <small class="d-block text-warning">${getDeadlineMessage(task.dueDate, today)}</small>
                 </div>
-                <span class="badge-priority-${t.priority}" style="font-size: 0.55rem;">${t.priority}</span>
+                <span class="badge-priority-${task.priority}" style="font-size: 0.55rem;">${task.priority}</span>
               </div>
             `,
             )
             .join("")}
           </div>
         `;
-      }
+
+      upcomingContainer.innerHTML = `${overdueHTML}${upcomingHTML}`;
     }
   } catch (error) {
     console.error("Error al inicializar el controlador de inicio:", error);

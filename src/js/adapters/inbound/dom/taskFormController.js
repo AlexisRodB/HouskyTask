@@ -26,6 +26,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const previewPriority = document.getElementById("preview-priority-badge");
   const previewDate = document.getElementById("preview-date");
 
+  function getLocalDateString(date = new Date()) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  function validateDueDate() {
+    if (!dateInput) return true;
+
+    const today = getLocalDateString();
+    dateInput.min = today;
+    const isValid = !dateInput.value || dateInput.value >= today;
+    dateInput.setCustomValidity(
+      isValid ? "" : "La fecha de entrega debe ser hoy o una fecha futura.",
+    );
+    dateInput.classList.toggle("is-invalid", !isValid);
+    return isValid;
+  }
+
+  if (dateInput) {
+    dateInput.min = getLocalDateString();
+  }
+
   // Sincronización en vivo
   if (titleInput) {
     titleInput.addEventListener("input", (e) => {
@@ -56,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (dateInput) {
     dateInput.addEventListener("change", (e) => {
+      validateDueDate();
       if (e.target.value) {
         const timeText = timeInput?.value ? ` · ${timeInput.value}` : "";
         previewDate.innerHTML = `<i class="bi bi-calendar3 me-1"></i> ${e.target.value}${timeText}`;
@@ -98,18 +123,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const isProjectSelected = Boolean(projectSelect.value);
       const isStatusSelected = Boolean(statusSelect.value);
       const isPrioritySelected = Boolean(priorityInput.value);
+      const isDueDateValid = validateDueDate();
       descInput.classList.toggle("is-invalid", !isDescriptionProvided);
       projectSelect.classList.toggle("is-invalid", !isProjectSelected);
       statusSelect.classList.toggle("is-invalid", !isStatusSelected);
       priorityGroup.classList.toggle("is-invalid", !isPrioritySelected);
       priorityFeedback.classList.toggle("d-block", !isPrioritySelected);
+      if (!isDueDateValid) dateInput.reportValidity();
 
       if (
         !titleInput.value.trim() ||
         !isDescriptionProvided ||
         !isProjectSelected ||
         !isStatusSelected ||
-        !isPrioritySelected
+        !isPrioritySelected ||
+        !isDueDateValid
       ) {
         return;
       }
@@ -117,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const newTask = {
         title: titleInput.value.trim(),
         description: descInput.value.trim(),
-        dueDate: dateInput.value || new Date().toISOString().split("T")[0],
+        dueDate: dateInput.value || getLocalDateString(),
         time: timeInput?.value || "",
         project: projectSelect.value,
         status: statusSelect.value,

@@ -11,7 +11,7 @@ Planificador de tareas para organizar pendientes, fechas y prioridades desde una
 
 ## Funcionalidades
 
-- **Inicio:** vista general para acceder a las secciones del planificador.
+- **Inicio:** muestra las tareas vencidas con los días transcurridos y las entregas de los próximos 7 días con los días restantes.
 - **Agregar tarea:** permite crear tareas con título, descripción, fecha, hora, prioridad, estado y proyecto.
 - **Tablero:** presenta las tareas en una vista de organización por estado.
 - **Calendario:** permite consultar tareas según sus fechas.
