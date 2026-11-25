@@ -1,5 +1,9 @@
 import { ApiTaskRepo } from "../../outbound/storage/ApiTaskRepo.js";
 import { hidePageLoader } from "../../../shared/pageLoader.js";
+import {
+  getDaysUntilDueDate,
+  getDeadlineMessage,
+} from "../../../shared/taskDates.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const taskRepo = new ApiTaskRepo();
@@ -29,6 +33,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     "noviembre",
     "diciembre",
   ];
+
+  function isTaskOverdue(task) {
+    const daysUntilDue = getDaysUntilDueDate(task.dueDate);
+    return (
+      task.status !== "completada" &&
+      daysUntilDue !== null &&
+      daysUntilDue < 0
+    );
+  }
 
   async function renderCalendar() {
     const year = viewDate.getFullYear();
@@ -157,9 +170,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let badgeClass = "bg-secondary";
     if (hasTasks) {
-      if (dayTasks.some((t) => t.priority === "alta")) badgeClass = "bg-danger";
-      else if (dayTasks.every((t) => t.status === "completada"))
+      if (dayTasks.every((t) => t.status === "completada"))
         badgeClass = "bg-success";
+      else if (
+        dayTasks.some((t) => t.priority === "alta") ||
+        dayTasks.some(isTaskOverdue)
+      )
+        badgeClass = "bg-danger";
     }
 
     return `
@@ -176,8 +193,8 @@ document.addEventListener("DOMContentLoaded", async () => {
               .slice(0, 2)
               .map(
                 (t) => `
-              <div class="p-1 rounded bg-dark border border-secondary text-truncate" style="font-size: 0.65rem;" title="${t.title}">
-                <span class="${t.status === "completada" ? "text-decoration-line-through text-muted" : "text-white"}">${t.title}</span>
+              <div class="p-1 rounded bg-dark border border-secondary text-truncate ${t.status === "completada" ? "calendar-task-chip-completed" : ""}" style="font-size: 0.65rem;" title="${t.title}">
+                <span class="${t.status === "completada" ? "calendar-task-completed" : isTaskOverdue(t) ? "calendar-task-overdue" : "text-white"}">${t.title}</span>
               </div>
             `,
               )
@@ -222,24 +239,40 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (dayTasks.length > 0) {
       const mainTask = dayTasks[0];
+      const mainTaskOverdue = isTaskOverdue(mainTask);
+      const dueMessage = mainTaskOverdue
+        ? getDeadlineMessage(mainTask.dueDate)
+        : "";
+      const deliveryLabel = mainTaskOverdue
+        ? "Entrega vencida"
+        : mainTask.status === "completada"
+          ? "Entrega completada"
+          : "Entrega programada";
+      const deliveryIcon = mainTaskOverdue
+        ? "bi-exclamation-triangle"
+        : mainTask.status === "completada"
+          ? "bi-check-circle"
+          : "bi-clock";
       detailTaskContent.innerHTML = `
-        <div class="text-secondary small mb-1"><i class="bi bi-clock me-1"></i> Entrega programada</div>
-        <h5 class="fw-bold text-white mb-2">${mainTask.title}</h5>
+        <div class="${mainTaskOverdue ? "text-danger" : "text-secondary"} small mb-1"><i class="bi ${deliveryIcon} me-1"></i> ${deliveryLabel}</div>
+        <h5 class="fw-bold text-white mb-2 ${mainTask.status === "completada" ? "calendar-task-completed" : ""}">${mainTask.title}</h5>
         <p class="text-secondary small mb-3">${mainTask.description || "Sin descripción adicional para esta tarea."}</p>
         
         <div class="d-flex align-items-center gap-2 mb-3">
           <span class="badge-priority-${mainTask.priority}" style="font-size: 0.65rem;">${mainTask.priority.toUpperCase()}</span>
-          <span class="badge bg-dark border border-secondary text-white" style="font-size: 0.65rem;">${mainTask.status}</span>
+          <span class="badge ${mainTaskOverdue ? "bg-danger" : mainTask.status === "completada" ? "bg-success" : "bg-dark border border-secondary text-white"}" style="font-size: 0.65rem;">${mainTaskOverdue ? "Vencida" : mainTask.status}</span>
         </div>
 
         <div class="mb-3">
           <div class="d-flex justify-content-between text-secondary small mb-1">
             <span>Proyecto: ${mainTask.project || "General"}</span>
-            <span>${mainTask.status === "completada" ? "100%" : "En progreso"}</span>
+            ${mainTaskOverdue ? "" : `<span>${mainTask.status === "completada" ? "100%" : "En progreso"}</span>`}
           </div>
-          <div class="progress bg-dark border border-secondary" style="height: 6px;">
-            <div class="progress-bar bg-warning" style="width: ${mainTask.status === "completada" ? "100%" : "50%"}"></div>
-          </div>
+          ${mainTaskOverdue ? `<div class="calendar-overdue-message"><i class="bi bi-exclamation-circle me-1"></i>${dueMessage}</div>` : `
+            <div class="progress bg-dark border border-secondary" style="height: 6px;">
+              <div class="progress-bar ${mainTask.status === "completada" ? "bg-success" : "bg-warning"}" style="width: ${mainTask.status === "completada" ? "100%" : "50%"}"></div>
+            </div>
+          `}
         </div>
 
         <a href="todasTareas.html" class="btn btn-primary-housky w-100 btn-sm py-2">
@@ -267,9 +300,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         afterTodayContainer.innerHTML = afterTasks
           .map(
             (t) => `
-          <div class="p-2 rounded bg-dark border border-secondary d-flex justify-content-between align-items-center">
+          <div class="p-2 rounded bg-dark border border-secondary d-flex justify-content-between align-items-center ${t.status === "completada" ? "calendar-task-chip-completed" : ""}">
             <div>
-              <div class="text-white fw-bold small mb-0">${t.title}</div>
+              <div class="fw-bold small mb-0 ${t.status === "completada" ? "calendar-task-completed" : isTaskOverdue(t) ? "calendar-task-overdue" : "text-white"}">${t.title}</div>
               <small class="text-secondary" style="font-size: 0.7rem;">${t.dueDate} · ${t.project || "General"}</small>
             </div>
             <span class="badge-priority-${t.priority}" style="font-size: 0.55rem;">${t.priority}</span>
