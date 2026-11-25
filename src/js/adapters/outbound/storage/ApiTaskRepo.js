@@ -1,4 +1,3 @@
-// src/js/adapters/outbound/storage/ApiTaskRepo.js
 import { authFetch } from "./authFetch.js";
 import { API_BASE_URL } from "../../../shared/constants.js";
 
@@ -8,9 +7,9 @@ export class ApiTaskRepo {
   }
 
   getCurrentUser() {
-    const raw = localStorage.getItem('houskytask_user');
+    const raw = localStorage.getItem("houskytask_user");
     if (!raw) {
-      window.location.href = 'login.html';
+      window.location.href = "login.html";
       return null;
     }
     return JSON.parse(raw);
@@ -21,7 +20,9 @@ export class ApiTaskRepo {
     if (!user) return [];
     const response = await authFetch(`${this.baseUrl}?userId=${user.id}`);
     if (!response.ok) {
-      throw new Error(`No se pudieron cargar las tareas (HTTP ${response.status}).`);
+      throw new Error(
+        `No se pudieron cargar las tareas (HTTP ${response.status}).`,
+      );
     }
     return await response.json();
   }
@@ -39,15 +40,12 @@ export class ApiTaskRepo {
     const user = this.getCurrentUser();
     if (!user) return;
 
-    const isUpdate = task.id && String(task.id).length < 10;
-    if (isUpdate) return this.update(task);
-
     const payload = { ...task, userId: user.id };
     delete payload.id;
 
     const response = await authFetch(this.baseUrl, {
-      method: 'POST',
-      body: JSON.stringify(payload)
+      method: "POST",
+      body: JSON.stringify(payload),
     });
     if (!response.ok) {
       throw new Error(`No se pudo guardar la tarea (HTTP ${response.status}).`);
@@ -56,22 +54,28 @@ export class ApiTaskRepo {
   }
 
   async update(task) {
-    const user = this.getCurrentUser();
-    if (!user) return;
-    if (!task.id) throw new Error('No se puede actualizar una tarea sin ID.');
+    if (!task.id) throw new Error("No se puede actualizar una tarea sin ID.");
+
+    const payload = { ...task };
+    delete payload.id;
+    delete payload.userId;
 
     const response = await authFetch(`${this.baseUrl}/${task.id}`, {
-      method: 'PUT',
-      body: JSON.stringify({ ...task, userId: user.id })
+      method: "PUT",
+      body: JSON.stringify(payload),
     });
     if (!response.ok) {
-      throw new Error(`No se pudo actualizar la tarea (HTTP ${response.status}).`);
+      throw new Error(
+        `No se pudo actualizar la tarea (HTTP ${response.status}).`,
+      );
     }
     return await response.json();
   }
 
   async delete(id) {
-    const response = await authFetch(`${this.baseUrl}/${id}`, { method: 'DELETE' });
+    const response = await authFetch(`${this.baseUrl}/${id}`, {
+      method: "DELETE",
+    });
     if (!response.ok) {
       throw new Error(`No se pudo eliminar la tarea (HTTP ${response.status}).`);
     }

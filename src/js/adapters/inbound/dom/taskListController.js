@@ -53,6 +53,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             <option value="completada" ${t.status === "completada" ? "selected" : ""}>Completada</option>
           </select>
 
+          <a class="btn btn-outline-secondary btn-sm" href="agregarTarea.html?id=${encodeURIComponent(t.id)}" title="Editar tarea" aria-label="Editar tarea">
+            <i class="bi bi-pencil"></i>
+          </a>
           <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${t.id}" title="Eliminar tarea">
             <i class="bi bi-trash"></i>
           </button>
@@ -75,8 +78,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const task = await taskRepo.findById(id);
         if (task) {
           task.status = newStatus;
-          await taskRepo.save(task);
-          loadAndRender(); // Refrescar vista
+          await taskRepo.update(task);
+          await loadAndRender();
         }
       });
     });
@@ -87,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const id = e.currentTarget.getAttribute("data-id");
         if (confirm("¿Estás seguro de que deseas eliminar esta tarea?")) {
           await taskRepo.delete(id);
-          loadAndRender(); // Refrescar vista
+          await loadAndRender();
         }
       });
     });
