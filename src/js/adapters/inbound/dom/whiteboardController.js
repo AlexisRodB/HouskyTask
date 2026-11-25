@@ -65,6 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const shapeOptions = document.querySelectorAll(".shape-option");
   const undoBtn = document.getElementById("undo-btn");
   const colorPicker = document.getElementById("color-picker");
+  const selectedColorButton = document.getElementById("selected-color-button");
+  const selectedColorIndicator = document.getElementById(
+    "selected-color-indicator",
+  );
   const colorSwatches = document.querySelectorAll(".color-swatch");
   const brushSizeInput = document.getElementById("brush-size");
   const sizeLabel = document.getElementById("size-label");
@@ -135,11 +139,24 @@ document.addEventListener("DOMContentLoaded", () => {
       swatch.classList.toggle("active", isSelected);
       swatch.setAttribute("aria-pressed", String(isSelected));
     });
+    selectedColorIndicator.style.setProperty(
+      "--selected-color",
+      colorPicker.value,
+    );
+    selectedColorButton.setAttribute(
+      "aria-label",
+      `Color seleccionado: ${colorPicker.value}. Abrir paleta`,
+    );
     if (activeTextEditor) activeTextEditor.style.color = colorPicker.value;
   }
 
   syncActiveColorSwatch();
   colorPicker.addEventListener("input", syncActiveColorSwatch);
+  colorSwatches.forEach((swatch) => {
+    swatch.addEventListener("click", () => {
+      bootstrap.Dropdown.getOrCreateInstance(selectedColorButton).hide();
+    });
+  });
 
   // Controlar seleccion de figuras desde el dropdown
   shapeOptions.forEach((opt) => {

@@ -23,9 +23,45 @@
 
 .color-palette {
   padding: 3px 6px;
+  white-space: nowrap;
+}
+
+.color-picker-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-color: var(--border-color);
+}
+
+.selected-color-indicator {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background-color: var(--selected-color, var(--accent-orange));
+}
+
+.color-picker-menu {
+  min-width: max-content;
+  padding: 0.5rem;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background-color: #0b0f19;
+  background-color: var(--bg-surface);
+}
+
+.custom-color-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.custom-color-control .form-control-color {
+  width: 30px;
+  height: 30px;
 }
 
 .color-swatch {

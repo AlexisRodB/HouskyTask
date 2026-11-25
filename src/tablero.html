@@ -242,77 +242,101 @@
           <div class="vr bg-secondary mx-1"></div>
 
           <!-- paleta de colores -->
-          <div
-            class="color-palette d-flex align-items-center gap-1"
-            role="group"
-            aria-label="Paleta de colores"
-          >
+          <span class="text-secondary small fw-semibold">Color</span>
+          <div class="dropdown color-picker-dropdown">
             <button
               type="button"
-              class="color-swatch active"
-              data-color="#ff6b00"
-              aria-label="Naranja"
-              aria-pressed="true"
-              title="Naranja"
-            ></button>
-            <button
-              type="button"
-              class="color-swatch"
-              data-color="#3b82f6"
-              aria-label="Azul"
-              aria-pressed="false"
-              title="Azul"
-            ></button>
-            <button
-              type="button"
-              class="color-swatch"
-              data-color="#10b981"
-              aria-label="Verde"
-              aria-pressed="false"
-              title="Verde"
-            ></button>
-            <button
-              type="button"
-              class="color-swatch"
-              data-color="#facc15"
-              aria-label="Amarillo"
-              aria-pressed="false"
-              title="Amarillo"
-            ></button>
-            <button
-              type="button"
-              class="color-swatch"
-              data-color="#ef4444"
-              aria-label="Rojo"
-              aria-pressed="false"
-              title="Rojo"
-            ></button>
-            <button
-              type="button"
-              class="color-swatch"
-              data-color="#a855f7"
-              aria-label="Morado"
-              aria-pressed="false"
-              title="Morado"
-            ></button>
-            <button
-              type="button"
-              class="color-swatch"
-              data-color="#f8fafc"
-              aria-label="Blanco"
-              aria-pressed="false"
-              title="Blanco"
-            ></button>
+              id="selected-color-button"
+              class="btn btn-sm btn-dark dropdown-toggle color-picker-toggle"
+              data-bs-toggle="dropdown"
+              data-bs-auto-close="outside"
+              aria-expanded="false"
+              aria-label="Color seleccionado: naranja. Abrir paleta"
+              title="Cambiar color"
+            >
+              <span
+                id="selected-color-indicator"
+                class="selected-color-indicator"
+              ></span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-dark color-picker-menu">
+              <div
+                class="color-palette d-flex align-items-center gap-1"
+                role="group"
+                aria-label="Paleta de colores"
+              >
+                <button
+                  type="button"
+                  class="color-swatch active"
+                  data-color="#ff6b00"
+                  aria-label="Naranja"
+                  aria-pressed="true"
+                  title="Naranja"
+                ></button>
+                <button
+                  type="button"
+                  class="color-swatch"
+                  data-color="#3b82f6"
+                  aria-label="Azul"
+                  aria-pressed="false"
+                  title="Azul"
+                ></button>
+                <button
+                  type="button"
+                  class="color-swatch"
+                  data-color="#10b981"
+                  aria-label="Verde"
+                  aria-pressed="false"
+                  title="Verde"
+                ></button>
+                <button
+                  type="button"
+                  class="color-swatch"
+                  data-color="#facc15"
+                  aria-label="Amarillo"
+                  aria-pressed="false"
+                  title="Amarillo"
+                ></button>
+                <button
+                  type="button"
+                  class="color-swatch"
+                  data-color="#ef4444"
+                  aria-label="Rojo"
+                  aria-pressed="false"
+                  title="Rojo"
+                ></button>
+                <button
+                  type="button"
+                  class="color-swatch"
+                  data-color="#a855f7"
+                  aria-label="Morado"
+                  aria-pressed="false"
+                  title="Morado"
+                ></button>
+                <button
+                  type="button"
+                  class="color-swatch"
+                  data-color="#f8fafc"
+                  aria-label="Blanco"
+                  aria-pressed="false"
+                  title="Blanco"
+                ></button>
+              </div>
+              <div class="custom-color-control">
+                <label for="color-picker" class="text-secondary small"
+                  >Personalizado</label
+                >
+                <input
+                  type="color"
+                  id="color-picker"
+                  value="#ff6b00"
+                  class="form-control form-control-color bg-dark border-secondary p-0"
+                  title="Elegir un color personalizado"
+                  aria-label="Elegir un color personalizado"
+                />
+              </div>
+            </div>
           </div>
-          <input
-            type="color"
-            id="color-picker"
-            value="#ff6b00"
-            class="form-control form-control-color bg-dark border-secondary p-0"
-            style="width: 30px; height: 30px"
-            title="Elegir un color personalizado"
-            aria-label="Elegir un color personalizado"
-          />
 
           <!-- slider tamano -->
           <div class="d-flex align-items-center gap-2 px-1">
