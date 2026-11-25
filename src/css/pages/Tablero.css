@@ -11,6 +11,7 @@
   cursor: crosshair;
   background-color: #05070d;
   display: block;
+  max-width: 100%;
   touch-action: none;
 }
 
@@ -41,7 +42,12 @@
 
 .whiteboard-main {
   height: 100vh;
+  min-width: 0;
   overflow: hidden;
+}
+
+.whiteboard-container {
+  min-width: 0;
 }
 
 @media (max-width: 991.98px) {
