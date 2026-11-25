@@ -23,7 +23,7 @@
   text-transform: uppercase;
 }
 
-.profile-sidebar-active {
+.profile-sidebar .nav-link.active.profile-sidebar-active {
   background-color: rgba(255, 107, 0, 0.15);
   border-left: 3px solid var(--accent-orange);
 }
