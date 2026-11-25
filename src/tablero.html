@@ -152,6 +152,15 @@
           >
             <i class="bi bi-eraser"></i>
           </button>
+          <button
+            id="tool-text"
+            class="btn btn-sm btn-dark text-secondary tool-btn"
+            type="button"
+            title="Agregar texto"
+            aria-label="Texto: escribe y haz clic en el lienzo"
+          >
+            <i class="bi bi-fonts"></i>
+          </button>
 
           <div class="vr bg-secondary mx-1"></div>
 
@@ -232,14 +241,77 @@
 
           <div class="vr bg-secondary mx-1"></div>
 
-          <!-- escoger color -->
+          <!-- paleta de colores -->
+          <div
+            class="color-palette d-flex align-items-center gap-1"
+            role="group"
+            aria-label="Paleta de colores"
+          >
+            <button
+              type="button"
+              class="color-swatch active"
+              data-color="#ff6b00"
+              aria-label="Naranja"
+              aria-pressed="true"
+              title="Naranja"
+            ></button>
+            <button
+              type="button"
+              class="color-swatch"
+              data-color="#3b82f6"
+              aria-label="Azul"
+              aria-pressed="false"
+              title="Azul"
+            ></button>
+            <button
+              type="button"
+              class="color-swatch"
+              data-color="#10b981"
+              aria-label="Verde"
+              aria-pressed="false"
+              title="Verde"
+            ></button>
+            <button
+              type="button"
+              class="color-swatch"
+              data-color="#facc15"
+              aria-label="Amarillo"
+              aria-pressed="false"
+              title="Amarillo"
+            ></button>
+            <button
+              type="button"
+              class="color-swatch"
+              data-color="#ef4444"
+              aria-label="Rojo"
+              aria-pressed="false"
+              title="Rojo"
+            ></button>
+            <button
+              type="button"
+              class="color-swatch"
+              data-color="#a855f7"
+              aria-label="Morado"
+              aria-pressed="false"
+              title="Morado"
+            ></button>
+            <button
+              type="button"
+              class="color-swatch"
+              data-color="#f8fafc"
+              aria-label="Blanco"
+              aria-pressed="false"
+              title="Blanco"
+            ></button>
+          </div>
           <input
             type="color"
             id="color-picker"
             value="#ff6b00"
             class="form-control form-control-color bg-dark border-secondary p-0"
             style="width: 30px; height: 30px"
-            title="Color"
+            title="Elegir un color personalizado"
+            aria-label="Elegir un color personalizado"
           />
 
           <!-- slider tamano -->

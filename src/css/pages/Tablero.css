@@ -21,6 +21,74 @@
   border-color: var(--accent-orange) !important;
 }
 
+.color-palette {
+  padding: 3px 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: #0b0f19;
+}
+
+.color-swatch {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background-color: var(--swatch-color);
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.color-swatch:hover {
+  transform: scale(1.15);
+}
+
+.color-swatch.active {
+  border-color: #fff;
+  box-shadow: 0 0 0 2px var(--swatch-color);
+}
+
+.canvas-text-editor {
+  position: absolute;
+  z-index: 2;
+  max-width: calc(100% - 8px);
+  padding: 5px 8px;
+  border: 2px dashed var(--accent-orange);
+  border-radius: 6px;
+  background: rgba(16, 22, 38, 0.78);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  outline: none;
+}
+
+.canvas-text-editor:focus {
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 0 0.15rem rgba(255, 107, 0, 0.2);
+}
+
+.canvas-text-preview {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 5px 8px;
+  border: 2px dashed var(--accent-orange);
+  border-radius: 6px;
+  background: rgba(255, 107, 0, 0.14);
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.12);
+  color: #ffb17a;
+  font-size: 0.75rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+#drawing-canvas.text-tool-active {
+  cursor: text;
+}
+
 /* imagenes redimencionables */
 .pasted-image-wrapper {
   position: absolute;

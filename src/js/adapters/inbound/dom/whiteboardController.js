@@ -55,13 +55,17 @@ document.addEventListener("DOMContentLoaded", () => {
   let startX = 0;
   let startY = 0;
   let snapshot = null;
+  let activeTextEditor = null;
+  let textPlacementPreview = null;
 
   const penBtn = document.getElementById("tool-pen");
   const eraserBtn = document.getElementById("tool-eraser");
+  const textBtn = document.getElementById("tool-text");
   const shapesDropdownBtn = document.getElementById("shapes-dropdown-btn");
   const shapeOptions = document.querySelectorAll(".shape-option");
   const undoBtn = document.getElementById("undo-btn");
   const colorPicker = document.getElementById("color-picker");
+  const colorSwatches = document.querySelectorAll(".color-swatch");
   const brushSizeInput = document.getElementById("brush-size");
   const sizeLabel = document.getElementById("size-label");
   const clearBtn = document.getElementById("clear-canvas-btn");
@@ -79,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // botones principales
-  const baseTools = [penBtn, eraserBtn];
+  const baseTools = [penBtn, eraserBtn, textBtn];
 
   function setBaseToolActive(activeBtn) {
     baseTools.forEach((b) => {
@@ -98,12 +102,44 @@ document.addEventListener("DOMContentLoaded", () => {
   penBtn.addEventListener("click", () => {
     currentTool = "pen";
     setBaseToolActive(penBtn);
+    canvas.classList.remove("text-tool-active");
+    removeTextPlacementPreview();
   });
 
   eraserBtn.addEventListener("click", () => {
     currentTool = "eraser";
     setBaseToolActive(eraserBtn);
+    canvas.classList.remove("text-tool-active");
+    removeTextPlacementPreview();
   });
+
+  textBtn.addEventListener("click", () => {
+    currentTool = "text";
+    setBaseToolActive(textBtn);
+    canvas.classList.add("text-tool-active");
+    showTextPlacementPreview();
+  });
+
+  colorSwatches.forEach((swatch) => {
+    swatch.style.setProperty("--swatch-color", swatch.dataset.color);
+    swatch.addEventListener("click", () => {
+      colorPicker.value = swatch.dataset.color;
+      syncActiveColorSwatch();
+    });
+  });
+
+  function syncActiveColorSwatch() {
+    colorSwatches.forEach((swatch) => {
+      const isSelected =
+        swatch.dataset.color.toLowerCase() === colorPicker.value.toLowerCase();
+      swatch.classList.toggle("active", isSelected);
+      swatch.setAttribute("aria-pressed", String(isSelected));
+    });
+    if (activeTextEditor) activeTextEditor.style.color = colorPicker.value;
+  }
+
+  syncActiveColorSwatch();
+  colorPicker.addEventListener("input", syncActiveColorSwatch);
 
   // Controlar seleccion de figuras desde el dropdown
   shapeOptions.forEach((opt) => {
@@ -111,6 +147,8 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const shape = e.currentTarget.getAttribute("data-shape");
       currentTool = shape; // 'rect', 'circle', o 'line'
+      canvas.classList.remove("text-tool-active");
+      removeTextPlacementPreview();
 
       // Activar visualmente el boton de formas
       baseTools.forEach((b) => {
@@ -131,11 +169,186 @@ document.addEventListener("DOMContentLoaded", () => {
     sizeLabel.textContent = `${val}px`;
   });
 
-  function startPosition(e) {
-    isDrawing = true;
+  function getCanvasPosition(e) {
+    const pointer = e.touches?.[0] || e;
     const rect = canvas.getBoundingClientRect();
-    startX = (e.clientX || e.touches[0].clientX) - rect.left;
-    startY = (e.clientY || e.touches[0].clientY) - rect.top;
+    return {
+      x: pointer.clientX - rect.left,
+      y: pointer.clientY - rect.top,
+    };
+  }
+
+  function drawTextWithinCanvas(text, x, y) {
+    let textSize = Math.max(14, Number(brushSizeInput.value) * 4);
+    const minTextSize = 10;
+
+    function wrapText() {
+      ctx.font = `${textSize}px Arial, sans-serif`;
+      const lines = [];
+      let line = "";
+
+      text.split(/\s+/).forEach((word) => {
+        let wordPart = "";
+        for (const character of word) {
+          if (
+            wordPart &&
+            ctx.measureText(`${wordPart}${character}`).width > canvas.width
+          ) {
+            if (line) lines.push(line);
+            lines.push(wordPart);
+            line = "";
+            wordPart = character;
+          } else {
+            wordPart += character;
+          }
+        }
+
+        const candidate = line ? `${line} ${wordPart}` : wordPart;
+        if (line && ctx.measureText(candidate).width > canvas.width) {
+          lines.push(line);
+          line = wordPart;
+        } else {
+          line = candidate;
+        }
+      });
+
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    let lines = wrapText();
+    let lineHeight = textSize * 1.2;
+    while (
+      lines.length * lineHeight > canvas.height &&
+      textSize > minTextSize
+    ) {
+      textSize--;
+      lines = wrapText();
+      lineHeight = textSize * 1.2;
+    }
+
+    const maxLines = Math.max(1, Math.floor(canvas.height / lineHeight));
+    if (lines.length > maxLines) {
+      lines = lines.slice(0, maxLines);
+      let lastLine = lines[maxLines - 1];
+      while (
+        lastLine &&
+        ctx.measureText(`${lastLine}…`).width > canvas.width
+      ) {
+        lastLine = lastLine.slice(0, -1);
+      }
+      lines[maxLines - 1] = `${lastLine}…`;
+    }
+
+    const textWidth = Math.max(...lines.map((line) => ctx.measureText(line).width));
+    const textHeight = lines.length * lineHeight;
+    const startX = Math.max(0, Math.min(x, canvas.width - textWidth));
+    const startY = Math.max(0, Math.min(y, canvas.height - textHeight));
+
+    ctx.fillStyle = colorPicker.value;
+    ctx.textBaseline = "top";
+    lines.forEach((line, index) => {
+      ctx.fillText(line, startX, startY + index * lineHeight);
+    });
+  }
+
+  function positionTextFrame(frame, x, y, width, height) {
+    const boundedX = Math.max(0, Math.min(x, canvas.width - width));
+    const boundedY = Math.max(0, Math.min(y, canvas.height - height));
+    frame.style.left = `${canvas.offsetLeft + boundedX}px`;
+    frame.style.top = `${canvas.offsetTop + boundedY}px`;
+    return { x: boundedX, y: boundedY };
+  }
+
+  function removeTextPlacementPreview() {
+    textPlacementPreview?.remove();
+    textPlacementPreview = null;
+  }
+
+  function showTextPlacementPreview() {
+    if (activeTextEditor || textPlacementPreview) return;
+
+    textPlacementPreview = document.createElement("div");
+    textPlacementPreview.className = "canvas-text-preview";
+    textPlacementPreview.textContent = "Haz clic para escribir";
+    textPlacementPreview.setAttribute("aria-hidden", "true");
+    container.append(textPlacementPreview);
+
+    const width = Math.min(220, canvas.width);
+    const height = 36;
+    positionTextFrame(
+      textPlacementPreview,
+      (canvas.width - width) / 2,
+      (canvas.height - height) / 2,
+      width,
+      height,
+    );
+    textPlacementPreview.style.width = `${width}px`;
+  }
+
+  function finishTextEditor(editor, shouldSave = true) {
+    if (activeTextEditor !== editor) return;
+
+    activeTextEditor = null;
+    const text = editor.value.trim();
+    const x = Number(editor.dataset.canvasX);
+    const y = Number(editor.dataset.canvasY);
+    editor.remove();
+
+    if (shouldSave && text) {
+      drawTextWithinCanvas(text, x, y);
+      saveState();
+    }
+    if (currentTool === "text") showTextPlacementPreview();
+  }
+
+  function createTextEditor(x, y) {
+    if (activeTextEditor) finishTextEditor(activeTextEditor);
+    removeTextPlacementPreview();
+
+    const editor = document.createElement("input");
+    const width = Math.min(220, canvas.width);
+    const height = 36;
+    const position = positionTextFrame(editor, x, y, width, height);
+
+    editor.type = "text";
+    editor.className = "canvas-text-editor";
+    editor.maxLength = 120;
+    editor.setAttribute("aria-label", "Escribe el texto para el tablero");
+    editor.dataset.canvasX = String(position.x);
+    editor.dataset.canvasY = String(position.y);
+    editor.style.width = `${width}px`;
+    editor.style.height = `${height}px`;
+    editor.style.fontSize = `${Math.max(14, Number(brushSizeInput.value) * 4)}px`;
+    editor.style.color = colorPicker.value;
+
+    activeTextEditor = editor;
+    container.append(editor);
+    editor.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        finishTextEditor(editor);
+      } else if (e.key === "Escape") {
+        finishTextEditor(editor, false);
+      }
+    });
+    editor.addEventListener("blur", () => finishTextEditor(editor));
+    requestAnimationFrame(() => {
+      if (activeTextEditor === editor) editor.focus();
+    });
+  }
+
+  function startPosition(e) {
+    const position = getCanvasPosition(e);
+    startX = position.x;
+    startY = position.y;
+
+    if (currentTool === "text") {
+      createTextEditor(startX, startY);
+      return;
+    }
+
+    isDrawing = true;
 
     if (currentTool === "pen" || currentTool === "eraser") {
       ctx.beginPath();
@@ -146,12 +359,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  canvas.addEventListener("mousemove", (e) => {
+    if (!textPlacementPreview) return;
+    const position = getCanvasPosition(e);
+    positionTextFrame(textPlacementPreview, position.x, position.y, 220, 36);
+  });
+
+  canvas.addEventListener("touchmove", (e) => {
+    if (!textPlacementPreview) return;
+    const position = getCanvasPosition(e);
+    positionTextFrame(textPlacementPreview, position.x, position.y, 220, 36);
+  });
+
   function draw(e) {
     if (!isDrawing) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const x = (e.clientX || e.touches[0].clientX) - rect.left;
-    const y = (e.clientY || e.touches[0].clientY) - rect.top;
+    const { x, y } = getCanvasPosition(e);
 
     ctx.lineWidth = brushSizeInput.value;
     ctx.strokeStyle = currentTool === "eraser" ? "#05070d" : colorPicker.value;
@@ -277,6 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
   undoBtn.addEventListener("click", undo);
 
   window.addEventListener("keydown", (e) => {
+    if (e.target === activeTextEditor) return;
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
       e.preventDefault();
       undo();
