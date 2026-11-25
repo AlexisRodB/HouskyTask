@@ -10,6 +10,10 @@
   }
 }
 
+main .card-housky:not(.profile-card):hover {
+  border-color: var(--border-color);
+}
+
 .profile-card-label {
   font-size: 0.7rem;
 }

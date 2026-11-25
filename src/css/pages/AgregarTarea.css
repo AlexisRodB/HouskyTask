@@ -89,3 +89,54 @@ body {
 .text-muted-custom {
   color: var(--text-muted) !important;
 }
+
+.reminder-time-select {
+  width: auto;
+  min-width: 145px;
+  padding: 7px 32px 7px 10px;
+  font-size: 0.78rem;
+}
+
+.reminder-time-select:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 575.98px) {
+  .reminder-setting {
+    align-items: flex-start !important;
+  }
+
+  .reminder-controls {
+    flex-direction: column-reverse;
+    align-items: flex-end !important;
+  }
+
+  .reminder-time-select {
+    min-width: 125px;
+  }
+}
+
+.housky-alert-popup {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-box);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  box-shadow: var(--shadow-card);
+}
+
+.housky-alert-title {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+}
+
+.housky-alert-confirm {
+  border-radius: var(--radius-btn) !important;
+  background-color: var(--accent-orange) !important;
+  font-weight: 600 !important;
+}
+
+.housky-alert-confirm:hover {
+  background-color: var(--accent-orange-hover) !important;
+}
