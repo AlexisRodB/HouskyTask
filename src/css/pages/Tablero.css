@@ -21,6 +21,110 @@
   border-color: var(--accent-orange) !important;
 }
 
+.color-palette {
+  padding: 3px 6px;
+  white-space: nowrap;
+}
+
+.color-picker-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-color: var(--border-color);
+}
+
+.selected-color-indicator {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background-color: var(--selected-color, var(--accent-orange));
+}
+
+.color-picker-menu {
+  min-width: max-content;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+}
+
+.custom-color-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.custom-color-control .form-control-color {
+  width: 30px;
+  height: 30px;
+}
+
+.color-swatch {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background-color: var(--swatch-color);
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.color-swatch:hover {
+  transform: scale(1.15);
+}
+
+.color-swatch.active {
+  border-color: #fff;
+  box-shadow: 0 0 0 2px var(--swatch-color);
+}
+
+.canvas-text-editor {
+  position: absolute;
+  z-index: 2;
+  max-width: calc(100% - 8px);
+  padding: 5px 8px;
+  border: 2px dashed var(--accent-orange);
+  border-radius: 6px;
+  background: rgba(16, 22, 38, 0.78);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  outline: none;
+}
+
+.canvas-text-editor:focus {
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 0 0.15rem rgba(255, 107, 0, 0.2);
+}
+
+.canvas-text-preview {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 5px 8px;
+  border: 2px dashed var(--accent-orange);
+  border-radius: 6px;
+  background: rgba(255, 107, 0, 0.14);
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.12);
+  color: #ffb17a;
+  font-size: 0.75rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+#drawing-canvas.text-tool-active {
+  cursor: text;
+}
+
 /* imagenes redimencionables */
 .pasted-image-wrapper {
   position: absolute;
